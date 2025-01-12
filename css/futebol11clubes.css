@@ -1,0 +1,104 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f4f4f4;
+}
+
+#gameContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+#clubContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #ffffff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+#clubImage {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+#tacticGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    gap: 10px;
+    background-color: #ffffff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.grid-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #000;
+    width: 100px;
+    height: 100px;
+    background-color: #e0e0e0;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.grid-item img {
+    width: 80%;
+    height: 60%;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+#controls {
+    display: flex;
+}
+
+#positionContainer {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+#positionContainer label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    color: #555;
+}
+
+#positionContainer input[type="radio"] {
+    accent-color: #007bff;
+    width: 16px;
+    height: 16px;
+}
+
+#addPlayerButton {
+    background-color: #00aaff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#addPlayerButton:hover {
+    background-color: #0078d4;
+}

@@ -1,0 +1,18 @@
+footer {
+    background-color: #333; /* Cor de fundo do rodapé */
+    color: #f2f2f2; /* Cor do texto */
+    text-align: center; /* Centraliza o texto */
+    padding: 10px; /* Preenchimento interno */
+    position: relative; /* Posição relativa para evitar problemas de sobreposição */
+    bottom: 0; /* Coloca o rodapé na parte inferior */
+    width: 100%; /* Largura total */
+}
+footer {
+    background-color: #333;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}

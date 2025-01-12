@@ -1,0 +1,72 @@
+/* Adivinharjogador.css */
+
+/* Centraliza o conteúdo principal */
+.container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* Estilo para a imagem do jogador */
+.jogador-imagem img {
+    max-width: 200px; /* Limite máximo de largura */
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/* Estilo para o contêiner do jogador e dicas */
+.jogador-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinha o início do contêiner */
+    margin-bottom: 20px; /* Espaço inferior para separar do restante */
+}
+
+/* Para garantir que a imagem do jogador não tenha margens */
+.jogador-imagem {
+    margin: 0; /* Remove qualquer margem */
+}
+
+/* Estilo para o contêiner de dicas */
+#dicas-container {
+    background-color: #f0f0f0;
+    padding: 15px;
+    border-radius: 10px;
+    max-width: 300px; /* Largura máxima do contêiner de dicas */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Adiciona uma leve sombra */
+    margin-left: 60px; /* Aumentando a margem esquerda para empurrar as dicas para a direita */
+}
+
+/* Estilo para o campo de entrada e botão */
+input#nome_jogador {
+    padding: 8px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Estilo para as vidas com bolas de futebol */
+.vidas {
+    margin-top: 15px;
+}
+
+.vida-icone {
+    width: 40px;
+    height: 40px;
+    margin: 0 5px;
+}
+
+/* Adiciona estilo para a sequência */
+#sequencia {
+    margin-top: 15px;
+    font-size: 18px;
+}
+
+#vidas, #sequencia_atual_text, #melhor_sequencia_text {
+    text-align: center;
+    margin-top: 20px;
+}

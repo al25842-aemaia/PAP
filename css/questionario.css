@@ -1,0 +1,19 @@
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: auto;
+}
+
+form label {
+    margin: 10px 0 5px;
+}
+
+form input, form select {
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+form select[multiple] {
+    height: 100px;
+}

@@ -1,0 +1,71 @@
+body {
+    margin: 0;
+    font-family: 'Arial', Helvetica, sans-serif;
+    background-color: #f4f4f4; /* Cor de fundo clara */
+}
+
+.content {
+    max-width: 450px; /* Largura máxima do formulário */
+    margin: 50px auto; /* Centraliza vertical e horizontalmente */
+    padding: 25px;
+    background-color: #fff; /* Cor de fundo do formulário */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Sombra mais suave */
+}
+
+h1 {
+    text-align: center; /* Centraliza o título */
+    color: #333; /* Cor do título */
+}
+
+.input-group {
+    margin-bottom: 20px; /* Espaçamento entre os campos */
+}
+
+label {
+    display: block; /* Faz o rótulo ocupar a largura total */
+    margin-bottom: 8px; /* Espaçamento abaixo do rótulo */
+    font-weight: bold; /* Destacar o rótulo */
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%; /* Largura total do campo */
+    padding: 12px; /* Preenchimento interno */
+    margin-bottom: 15px; /* Espaçamento abaixo do campo */
+    border: 1px solid #ccc; /* Borda sutil */
+    border-radius: 6px; /* Bordas arredondadas */
+    font-size: 1em; /* Tamanho do texto */
+    color: #333; /* Cor do texto */
+}
+
+input[type="submit"] {
+    width: 100%; /* Largura total do botão */
+    padding: 12px; /* Preenchimento interno do botão */
+    background-color: #04AA6D; /* Cor de fundo do botão */
+    color: white; /* Cor do texto do botão */
+    border: none; /* Remove a borda padrão */
+    border-radius: 6px; /* Bordas arredondadas */
+    font-size: 1.2em; /* Tamanho da fonte */
+    cursor: pointer; /* Muda o cursor para indicar interatividade */
+    transition: background-color 0.3s ease; /* Transição suave para o hover */
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049; /* Cor do botão ao passar o mouse */
+}
+
+.error,
+.success {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.error {
+    color: #f44336; /* Vermelho para erros */
+}
+
+.success {
+    color: #4CAF50; /* Verde para sucesso */
+}
