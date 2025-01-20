@@ -15,7 +15,7 @@
     <section class="hero">
         <div class="hero-content">
             <h1>Bem-vindo ao Mundo do Futebol!</h1>
-            <p>Explore, registre e gerencie seu time de futebol de maneira simples e dinâmica.</p>
+            <p>Explora, regista e gere a tua equipa de futebol de forma simples e dinâmica.</p>
             <a href="questionario.php" class="cta-button">Começar</a>
         </div>
     </section>
