@@ -10,4 +10,8 @@ try {
 } catch (PDOException $e) {
     echo "Erro de conexão: " . $e->getMessage();
 }
+//$host = 'localhost';
+//$dbname = 'pap_futebol'; 
+//$user = 'root';           
+//$password = ''; 
 ?>
