@@ -27,7 +27,7 @@
 
         <!-- Exemplo do terceiro minijogo -->
         <div class="game-item" onclick="navigateTo('futbol11grid.php')">
-            <img src="imagens/Minijogo3.png" alt="futebol11grid"> <!-- Imagem do minijogo 3 -->
+            <img src="imagens/futbol12grid.png" alt="futebol12grid"> <!-- Imagem do minijogo 3 -->
             <button>Play</button>
         </div>
 
