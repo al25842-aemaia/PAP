@@ -25,14 +25,14 @@ $clubesData = $clubes->fetch_all(MYSQLI_ASSOC);
 echo '<div class="row">';
 echo '<div class="cell empty"></div>'; // Célula vazia no canto superior esquerdo
 foreach ($nacionalidadeData as $nacionalidade) {
-    echo '<div class="cell flag"><img src="C:/xampp/htdocs/PAP/imagens_nacionalidade/' . $nacionalidade['imagem_nacionalidade'] . '" alt="' . $nacionalidade['nacionalidade'] . '" style="width: 50px; height: auto;"></div>';
+    echo '<div class="cell flag"><img src="' . $nacionalidade['imagem_nacionalidade'] . '" alt="' . $nacionalidade['nacionalidade'] . '" style="width: 50px; height: auto;"></div>';
 }
 echo '</div>';
 
 // Geração das linhas de clubes (Clubes e suas nacionalidades)
 foreach ($clubesData as $clube) {
     echo '<div class="row">';
-    echo '<div class="cell club"><img src="C:/xampp/htdocs/PAP/imagens_clube/' . $clube['imagem_clube'] . '" alt="' . $clube['nome_clube'] . '" style="width: 50px; height: auto;"></div>';
+    echo '<div class="cell club"><img src="' . $clube['imagem_clube'] . '" alt="' . $clube['nome_clube'] . '" style="width: 50px; height: auto;"></div>';
     foreach ($nacionalidadeData as $nacionalidade) {
         // Aqui associamos o clube com a nacionalidade nas células
         echo '<div class="cell guess" data-clube="' . $clube['nome_clube'] . '" data-nacionalidade="' . $nacionalidade['nacionalidade'] . '"></div>';
