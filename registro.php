@@ -1,15 +1,9 @@
 <?php
+require_once 'db_connection.php';
+
 session_start();
 $error = '';
 $success = '';
-
-// Conexão com o banco de dados
-try {
-    $pdo = new PDO('mysql:host=localhost;dbname=pap_futebol', 'root', '');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Erro de conexão: " . $e->getMessage());
-}
 
 // Verificar se o formulário foi enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

@@ -1,16 +1,42 @@
 /* Adivinharjogador.css */
 
 /* Centraliza o conteúdo principal */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+}
+
+h1 {
+    font-size: 2rem;
+    color: #333;
+    text-align: center;
+    margin: 20px 0;
+}
+
 .container {
     text-align: center;
-    margin-top: 50px;
+    margin-top: 30px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 600px;
 }
 
 /* Estilo para a imagem do jogador */
 .jogador-imagem img {
-    max-width: 200px; /* Limite máximo de largura */
-    border-radius: 8px;
-    margin-bottom: 20px;
+    max-width: 150px; /* Limite máximo de largura */
+    border-radius: 12px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 /* Estilo para o contêiner do jogador e dicas */
@@ -18,55 +44,98 @@
     display: flex;
     justify-content: center;
     align-items: flex-start; /* Alinha o início do contêiner */
-    margin-bottom: 20px; /* Espaço inferior para separar do restante */
-}
-
-/* Para garantir que a imagem do jogador não tenha margens */
-.jogador-imagem {
-    margin: 0; /* Remove qualquer margem */
+    gap: 20px; /* Espaço entre os itens */
+    margin-bottom: 20px;
 }
 
 /* Estilo para o contêiner de dicas */
 #dicas-container {
-    background-color: #f0f0f0;
+    background-color: #eef6fc;
     padding: 15px;
-    border-radius: 10px;
-    max-width: 300px; /* Largura máxima do contêiner de dicas */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Adiciona uma leve sombra */
-    margin-left: 60px; /* Aumentando a margem esquerda para empurrar as dicas para a direita */
+    border-radius: 12px;
+    max-width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #007bff;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    margin: 0;
 }
 
 /* Estilo para o campo de entrada e botão */
 input#nome_jogador {
-    padding: 8px;
+    padding: 12px;
     font-size: 16px;
-    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 80%;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease;
+}
+
+input#nome_jogador:focus {
+    border-color: #007bff;
+    outline: none;
 }
 
 button {
-    padding: 10px 20px;
+    padding: 12px 25px;
     font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
 }
 
 /* Estilo para as vidas com bolas de futebol */
 .vidas {
-    margin-top: 15px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
 }
 
 .vida-icone {
     width: 40px;
     height: 40px;
-    margin: 0 5px;
 }
 
 /* Adiciona estilo para a sequência */
 #sequencia {
-    margin-top: 15px;
-    font-size: 18px;
+    margin-top: 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #555;
+    text-align: center;
 }
 
 #vidas, #sequencia_atual_text, #melhor_sequencia_text {
-    text-align: center;
-    margin-top: 20px;
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Melhorias gerais de espaçamento e layout */
+@media (max-width: 768px) {
+    .jogador-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #dicas-container {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    input#nome_jogador {
+        width: 100%;
+    }
 }

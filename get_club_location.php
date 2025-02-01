@@ -1,5 +1,5 @@
 <?php
-include 'db_connection.php'; // Certifique-se de que este arquivo está configurado corretamente para conectar ao banco de dados.
+require_once 'db_connection.php';
 
 if (isset($_GET['id_clube'])) {
     $id_clube = $_GET['id_clube'];

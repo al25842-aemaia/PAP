@@ -1,17 +1,5 @@
 <?php
-// Conectar ao banco de dados
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "pap_futebol";
-
-// Criação da conexão
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verificação de erro de conexão
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
+require_once 'db_connection.php';
 
 // Pegar a posição
 $position = isset($_GET['position']) ? $_GET['position'] : '';

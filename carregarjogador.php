@@ -1,9 +1,5 @@
 <?php
-// Conexão com a base de dados
-$conn = new mysqli('localhost', 'root', '', 'pap_futebol');
-if ($conn->connect_error) {
-    die("Erro de conexão: " . $conn->connect_error);
-}
+require_once 'db_connection.php';
 
 // Consulta para selecionar um jogador aleatório e suas informações
 $result = $conn->query("SELECT jogador.*, 

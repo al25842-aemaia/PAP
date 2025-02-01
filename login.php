@@ -1,14 +1,8 @@
 <?php
+require_once 'db_connection.php';
+
 session_start();
 $error = '';
-
-// Conexão com o banco de dados
-try {
-    $pdo = new PDO('mysql:host=localhost;dbname=pap_futebol', 'root', '');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Erro de conexão: " . $e->getMessage());
-}
 
 // Verificar se o formulário foi enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -26,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Verificar a senha
         if (password_verify($password, $user['senha'])) {
             $_SESSION['loggedin'] = true;
-            header('Location: questionario_jogador.php');
+            header('Location: pagina_principal.php');
             exit;
         } else {
             $error = 'Nome de utilizador ou senha inválidos.';

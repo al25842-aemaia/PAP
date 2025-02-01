@@ -1,3 +1,4 @@
+<?php require_once 'db_connection.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,13 +13,6 @@
         <div class="header">FUTBOL11 GRID</div>
         <div class="grid">
         <?php
-// Conexão com a base de dados
-$conn = new mysqli('localhost', 'root', '', 'pap_futebol');
-
-if ($conn->connect_error) {
-    die("Erro de conexão: " . $conn->connect_error);
-}
-
 // Busca 3 nacionalidades aleatórias
 $nacionalidades = $conn->query("SELECT nacionalidade, imagem_nacionalidade FROM nacionalidade ORDER BY RAND() LIMIT 3");
 $nacionalidadeData = $nacionalidades->fetch_all(MYSQLI_ASSOC);

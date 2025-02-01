@@ -38,7 +38,6 @@ function mostrarErro(mensagem) {
 }
 
 function atualizarInterfaceJogador(data) {
-    console.log("Jogador Atual:", jogadorAtual); // Verifique se o jogador está sendo carregado corretamente
     document.getElementById('jogador').innerHTML = `<img src="${data.imagem_jogador}" alt="${data.nome_jogador}">`;
 }
 

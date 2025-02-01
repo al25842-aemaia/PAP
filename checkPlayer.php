@@ -1,13 +1,9 @@
 <?php
+require_once 'db_connection.php';
+
 session_start();
 if (!isset($_SESSION['correct_players'])) {
     $_SESSION['correct_players'] = 0;  // Conta jogadores corretos
-}
-
-// Conexão com a base de dados
-$conn = new mysqli("localhost", "root", "", "pap_futebol");
-if ($conn->connect_error) {
-    die("Conexão falhou: " . $conn->connect_error);
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

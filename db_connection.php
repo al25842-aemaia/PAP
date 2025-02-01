@@ -1,17 +1,15 @@
 <?php
-$host = 'localhost';
-$dbname = 'pap_futebol'; // Nome correto do banco de dados
-$user = 'root';           // Usuário root do MySQL
-$password = '';           // Senha vazia
+require 'secreto.php';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    echo "Erro de conexão: " . $e->getMessage();
+    die("Erro de conexão: " . $e->getMessage());
 }
-//$host = 'localhost';
-//$dbname = 'pap_futebol'; 
-//$user = 'root';           
-//$password = ''; 
+
+$conn = new mysqli($host, $user, $password, $dbname);
+if ($conn->connect_error) {
+    die("Erro de conexão: " . $conn->connect_error);
+}
 ?>
