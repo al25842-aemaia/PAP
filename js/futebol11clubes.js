@@ -1,59 +1,60 @@
 const positionsMap = {
     "4-3-3": [
-        // Linha 1 (Ataque)
-        ["EE", "PL", "ED"],
-        // Linha 2 (Meio-campo)
-        ["MC", "MCO", "MC"],
-        // Linha 3 (Defesa)
-        ["DE", "DC", "DC", "DD"],
-        // Linha 4 (Goleiro)
+        ["EE", "PL1", "ED"],
+        ["MC1", "MCO", "MC2"],
+        ["DE", "DC1", "DC2", "DD"],
         ["GR"]
     ],
     "4-4-2": [
-        // Linha 1 (Ataque)
-        ["PL", "SA"],
-        // Linha 2 (Meio-campo)
-        ["MC", "MCO", "MDC", "MC"],
-        // Linha 3 (Defesa)
+        ["PL1", "PL2"],
+        ["MC1", "MCO", "MDC", "MC2"],
         ["DE", "DC", "DC", "DD"],
-        // Linha 4 (Goleiro)
         ["GR"]
     ],
     "3-5-2": [
-        // Linha 1 (Ataque)
-        ["PL", "SA"],
-        // Linha 2 (Meio-campo)
-        ["MC", "MCO", "MDC", "MC", "MDC"],
-        // Linha 3 (Defesa)
-        ["DC", "DC", "DD"],
-        // Linha 4 (Goleiro)
+        ["PL1", "PL2"],
+        ["ME", "MC1", "MDC", "MC2", "MD"],
+        ["DC1", "DC2", "DC3"],
         ["GR"]
     ]
 };
 
-// Função para gerar o campo com base na tática escolhida
 function generateField(tactic) {
     const field = document.getElementById("field");
-    field.innerHTML = ""; // Limpar campo atual
+    field.innerHTML = ""; // Limpa o campo
 
     const positions = positionsMap[tactic];
+    const rows = positions.length;
+    const fieldHeight = field.clientHeight;
+    const rowHeight = fieldHeight / rows;
 
-    // Adiciona as posições começando de baixo para cima
     positions.forEach((row, rowIndex) => {
+        const rowY = rowIndex * rowHeight + rowHeight / 2;
+        const cols = row.length;
+        const fieldWidth = field.clientWidth;
+        const colWidth = fieldWidth / cols;
+
         row.forEach((pos, colIndex) => {
             const positionDiv = document.createElement("div");
             positionDiv.classList.add("position");
             positionDiv.setAttribute("data-pos", pos);
             positionDiv.innerHTML = pos;
+
+            // Posicionamento no campo
+            const colX = colIndex * colWidth + colWidth / 2;
+            positionDiv.style.left = `${colX}px`;
+            positionDiv.style.top = `${rowY}px`;
+            positionDiv.style.transform = "translate(-50%, -50%)";
+
             field.appendChild(positionDiv);
         });
     });
 }
 
-// Inicializa o campo com a tática selecionada ao carregar a página
+// Inicializa o campo com a tática padrão ao carregar a página
 document.addEventListener("DOMContentLoaded", () => {
     const tacticSelect = document.getElementById("tactic");
-    generateField(tacticSelect.value); // Gera campo com tática padrão (4-3-3)
+    generateField(tacticSelect.value);
 
     // Atualiza o campo quando a tática for alterada
     tacticSelect.addEventListener("change", (e) => {
@@ -61,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+// Adicionar jogador ao campo
 document.getElementById("addPlayer").addEventListener("click", function() {
     let name = document.getElementById("playerName").value;
     let position = document.getElementById("playerPosition").value;
@@ -71,7 +73,12 @@ document.getElementById("addPlayer").addEventListener("click", function() {
     }
 
     let positionDiv = document.querySelector(`.position[data-pos="${position}"]`);
-    if (positionDiv.innerHTML.trim() !== "") {
+    if (!positionDiv) {
+        alert("Essa posição não existe no esquema atual!");
+        return;
+    }
+
+    if (positionDiv.innerHTML.trim() !== position) {
         alert("Já existe um jogador nesta posição!");
         return;
     }

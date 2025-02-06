@@ -28,9 +28,13 @@ h1 {
     position: relative;
     border-radius: 10px;
     border: 2px solid white;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
 }
 
-/* Estilo dos quadrados das posições */
+/* Estilo das posições */
 .position {
     width: 80px;
     height: 80px;
@@ -42,29 +46,8 @@ h1 {
     color: black;
     border-radius: 5px;
     font-size: 0.9em;
-    position: absolute; /* Permite mover livremente dentro do campo */
+    position: absolute;
 }
-
-/* Posicionamento dos jogadores conforme a tática 4-3-3 atacante */
-
-/* Goleiro (GR) */
-#gr { left: 50%; bottom: 20px; transform: translateX(-50%); }
-
-/* Linha defensiva (DE - DC - DC - DD) */
-#de { left: 15%; bottom: 100px; }
-#dc1 { left: 37%; bottom: 100px; }
-#dc2 { left: 63%; bottom: 100px; }
-#dd { left: 85%; bottom: 100px; }
-
-/* Meio-campo (MC - MCO - MC) */
-#mc1 { left: 25%; bottom: 200px; }
-#mco { left: 50%; bottom: 220px; transform: translateX(-50%); }
-#mc2 { left: 75%; bottom: 200px; }
-
-/* Ataque (EE - PL - ED) */
-#ee { left: 20%; bottom: 320px; }
-#pl { left: 50%; bottom: 350px; transform: translateX(-50%); }
-#ed { left: 80%; bottom: 320px; }
 
 /* Botões */
 button {
@@ -94,4 +77,45 @@ button:hover {
 
 #tactic-selection {
     margin-top: 10px;
+}
+
+#small-square {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+    width: 150px;
+    height: 150px;
+    background-color: #333;
+    margin: 10px auto;
+}
+
+#small-square img {
+    width: 50px;
+    height: 50px;
+}
+
+#club-name {
+    color: white;
+    margin-left: 10px;
+}
+#suggestionBox {
+    position: absolute;
+    background: white;
+    color: black;
+    border: 1px solid #ccc;
+    width: 200px;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 10;
+    border-radius: 5px;
+}
+
+.suggestion {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.suggestion:hover {
+    background: #ddd;
 }
