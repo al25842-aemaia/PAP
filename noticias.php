@@ -1,12 +1,10 @@
 <?php
+require_once 'db_connection.php';
+
 // Inclui o menu na página
 include 'menu.php';
 
 try {
-    // Conexão com o banco de dados
-    $pdo = new PDO('mysql:host=localhost;dbname=pap_futebol', 'root', '');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
     // Consulta SQL para buscar as notícias mais recentes primeiro
     $sql = "SELECT * FROM noticiais ORDER BY id_noticia DESC"; 
     $result = $pdo->query($sql);

@@ -1,8 +1,7 @@
 <?php
-try {
-    $pdo = new PDO('mysql:host=localhost;dbname=pap_futebol', 'root', '');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+require_once 'db_connection.php';
 
+try {
     // Criptografar a senha
     $senha_encriptada = password_hash('1234', PASSWORD_DEFAULT);
 

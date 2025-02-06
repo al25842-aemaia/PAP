@@ -1,3 +1,4 @@
+<?php require_once 'db_connection.php'; ?>
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -20,11 +21,7 @@
             $titulo = $_POST['titulo'];
             $noticia = $_POST['noticia'];
 
-            // Conexão com o banco de dados
             try {
-                $pdo = new PDO('mysql:host=localhost;dbname=pap_futebol', 'root', '');
-                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
                 // Inserção no banco de dados
                 $stmt = $pdo->prepare('INSERT INTO noticiais (titulo, noticia) VALUES (:titulo, :noticia)');
                 $stmt->execute(['titulo' => $titulo, 'noticia' => $noticia]);

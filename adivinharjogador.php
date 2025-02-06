@@ -1,11 +1,3 @@
-<?php
-// Conexão com a base de dados
-$conn = new mysqli('localhost', 'root', '', 'pap_futebol');
-if ($conn->connect_error) {
-    die("Erro de conexão: " . $conn->connect_error);
-}
-?>
-
 <!DOCTYPE html>
 <html lang="pt">
 <head>

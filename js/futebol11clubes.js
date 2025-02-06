@@ -1,98 +1,87 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const tacticGrid = document.getElementById("tacticGrid");
-    const playerSearch = document.getElementById("playerSearch");
-    const addPlayerButton = document.getElementById("addPlayerButton");
-    const clubImage = document.getElementById("clubImage");
-    const clubName = document.getElementById("clubName");
+const positionsMap = {
+    "4-3-3": [
+        ["EE", "PL1", "ED"],
+        ["MC1", "MCO", "MC2"],
+        ["DE", "DC1", "DC2", "DD"],
+        ["GR"]
+    ],
+    "4-4-2": [
+        ["PL1", "PL2"],
+        ["MC1", "MCO", "MDC", "MC2"],
+        ["DE", "DC", "DC", "DD"],
+        ["GR"]
+    ],
+    "3-5-2": [
+        ["PL1", "PL2"],
+        ["ME", "MC1", "MDC", "MC2", "MD"],
+        ["DC1", "DC2", "DC3"],
+        ["GR"]
+    ]
+};
 
-    // Selecionar um clube aleatório
-    let currentClub = clubs[Math.floor(Math.random() * clubs.length)];
-    clubName.textContent = currentClub.nome_clube;
-    clubImage.src = currentClub.imagem_clube;
+function generateField(tactic) {
+    const field = document.getElementById("field");
+    field.innerHTML = ""; // Limpa o campo
 
-    // Gerar a tática (exemplo: 4-4-2)
-    const tactics = {
-        "4-4-2": [
-            { position: "PL", filled: false }, { position: "PL", filled: false },
-            { position: "MCO", filled: false }, { position: "MC", filled: false },
-            { position: "MC", filled: false }, { position: "MDC", filled: false },
-            { position: "DE", filled: false }, { position: "DC", filled: false },
-            { position: "DC", filled: false }, { position: "DD", filled: false },
-            { position: "GR", filled: false }
-        ]
-    };
+    const positions = positionsMap[tactic];
+    const rows = positions.length;
+    const fieldHeight = field.clientHeight;
+    const rowHeight = fieldHeight / rows;
 
-    const selectedTactic = tactics["4-4-2"]; // Tática fixa para teste
+    positions.forEach((row, rowIndex) => {
+        const rowY = rowIndex * rowHeight + rowHeight / 2;
+        const cols = row.length;
+        const fieldWidth = field.clientWidth;
+        const colWidth = fieldWidth / cols;
 
-    // Limpar e configurar a grade
-    function renderGrid() {
-        tacticGrid.innerHTML = ""; // Limpa o conteúdo anterior
-        selectedTactic.forEach((player) => {
-            const gridItem = document.createElement("div");
-            gridItem.classList.add("grid-item");
-            gridItem.dataset.position = player.position;
+        row.forEach((pos, colIndex) => {
+            const positionDiv = document.createElement("div");
+            positionDiv.classList.add("position");
+            positionDiv.setAttribute("data-pos", pos);
+            positionDiv.innerHTML = pos;
 
-            if (player.filled && player.image && player.name) {
-                // Se preenchido, exibe o jogador
-                gridItem.innerHTML = `
-                    <img src="${player.image}" alt="${player.name}" />
-                    <span>${player.name}</span>
-                `;
-            } else {
-                // Se vazio, exibe apenas a posição
-                gridItem.textContent = player.position;
-            }
+            // Posicionamento no campo
+            const colX = colIndex * colWidth + colWidth / 2;
+            positionDiv.style.left = `${colX}px`;
+            positionDiv.style.top = `${rowY}px`;
+            positionDiv.style.transform = "translate(-50%, -50%)";
 
-            tacticGrid.appendChild(gridItem);
+            field.appendChild(positionDiv);
         });
+    });
+}
+
+// Inicializa o campo com a tática padrão ao carregar a página
+document.addEventListener("DOMContentLoaded", () => {
+    const tacticSelect = document.getElementById("tactic");
+    generateField(tacticSelect.value);
+
+    // Atualiza o campo quando a tática for alterada
+    tacticSelect.addEventListener("change", (e) => {
+        generateField(e.target.value);
+    });
+});
+
+// Adicionar jogador ao campo
+document.getElementById("addPlayer").addEventListener("click", function() {
+    let name = document.getElementById("playerName").value;
+    let position = document.getElementById("playerPosition").value;
+
+    if (name.trim() === "") {
+        alert("Por favor, insira um nome de jogador.");
+        return;
     }
 
-    renderGrid(); // Renderizar a grade inicialmente
+    let positionDiv = document.querySelector(`.position[data-pos="${position}"]`);
+    if (!positionDiv) {
+        alert("Essa posição não existe no esquema atual!");
+        return;
+    }
 
-    // Verificar jogador
-    addPlayerButton.addEventListener("click", () => {
-        const playerName = playerSearch.value.trim();
-        if (!playerName) {
-            alert("Digite o nome do jogador.");
-            return;
-        }
+    if (positionDiv.innerHTML.trim() !== position) {
+        alert("Já existe um jogador nesta posição!");
+        return;
+    }
 
-        // Buscar jogador no banco de dados
-        const player = players.find(p => p.nome_jogador.toLowerCase() === playerName.toLowerCase());
-
-        if (!player) {
-            alert("Jogador não encontrado.");
-            return;
-        }
-
-        // Verificar se o jogador pertence ao clube atual
-        if (player.nome_clube !== currentClub.nome_clube) {
-            alert(`Jogador ${player.nome_jogador} não pertence ao clube ${currentClub.nome_clube}.`);
-            return;
-        }
-
-        // Verificar se a posição está disponível
-        const availablePosition = selectedTactic.find(p => p.position === player.nome_posicao && !p.filled);
-        if (!availablePosition) {
-            alert(`A posição ${player.nome_posicao} já está ocupada ou não faz parte da tática.`);
-            return;
-        }
-
-        // Marcar a posição como preenchida
-        availablePosition.filled = true;
-        availablePosition.image = player.imagem_jogador;
-        availablePosition.name = player.nome_jogador;
-
-        renderGrid(); // Atualizar a grade
-
-        // Selecionar o próximo clube
-        currentClub = clubs[Math.floor(Math.random() * clubs.length)];
-        clubName.textContent = currentClub.nome_clube;
-        clubImage.src = currentClub.imagem_clube;
-
-        // Verificar se todos os jogadores foram inseridos
-        if (selectedTactic.every(p => p.filled)) {
-            alert("Parabéns! Você completou o time.");
-        }
-    });
+    positionDiv.innerHTML = `<div class="player">${name}</div>`;
 });

@@ -1,104 +1,121 @@
 body {
     font-family: Arial, sans-serif;
+    background-color: black;
+    color: white;
+    text-align: center;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #f4f4f4;
 }
 
-#gameContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    padding: 20px;
-}
-
-#clubContainer {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background-color: #ffffff;
+header {
+    background: #222;
+    color: white;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    font-size: 1.2em;
 }
 
-#clubImage {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 50%;
+h1 {
+    font-size: 1.5em;
+    margin: 5px 0;
 }
 
-#tacticGrid {
-    display: grid;
-    grid-template-columns: repeat(4, 100px);
-    gap: 10px;
-    background-color: #ffffff;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-}
-
-.grid-item {
+#field {
+    width: 90%;
+    max-width: 1000px;
+    height: 500px;
+    background: green;
+    margin: 20px auto;
+    position: relative;
+    border-radius: 10px;
+    border: 2px solid white;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
     justify-content: center;
-    border: 1px solid #000;
-    width: 100px;
-    height: 100px;
-    background-color: #e0e0e0;
+    align-content: center;
+}
+
+/* Estilo das posições */
+.position {
+    width: 80px;
+    height: 80px;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-weight: bold;
-    text-align: center;
-    border-radius: 4px;
+    color: black;
+    border-radius: 5px;
+    font-size: 0.9em;
+    position: absolute;
 }
 
-.grid-item img {
-    width: 80%;
-    height: 60%;
-    object-fit: cover;
-    border-radius: 4px;
-}
-
-#controls {
-    display: flex;
-}
-
-#positionContainer {
-    display: flex;
-    gap: 10px;
+/* Botões */
+button {
+    padding: 10px 20px;
     margin-top: 10px;
-}
-
-#positionContainer label {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 14px;
-    color: #555;
-}
-
-#positionContainer input[type="radio"] {
-    accent-color: #007bff;
-    width: 16px;
-    height: 16px;
-}
-
-#addPlayerButton {
-    background-color: #00aaff;
+    cursor: pointer;
+    background-color: #008CBA;
     color: white;
     border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+button:hover {
+    background-color: #005f73;
+}
+
+.player {
+    background: yellow;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+#player-selection {
+    margin-top: 20px;
+}
+
+#tactic-selection {
     margin-top: 10px;
 }
 
-#addPlayerButton:hover {
-    background-color: #0078d4;
+#small-square {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+    width: 150px;
+    height: 150px;
+    background-color: #333;
+    margin: 10px auto;
+}
+
+#small-square img {
+    width: 50px;
+    height: 50px;
+}
+
+#club-name {
+    color: white;
+    margin-left: 10px;
+}
+#suggestionBox {
+    position: absolute;
+    background: white;
+    color: black;
+    border: 1px solid #ccc;
+    width: 200px;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 10;
+    border-radius: 5px;
+}
+
+.suggestion {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.suggestion:hover {
+    background: #ddd;
 }
