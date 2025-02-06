@@ -7,7 +7,7 @@ const positionsMap = {
     ],
     "4-4-2": [
         ["PL1", "PL2"],
-        ["MC1", "MCO", "MDC", "MC2"],
+        ["ME", "MCO", "MDC", "MD"],
         ["DE", "DC", "DC", "DD"],
         ["GR"]
     ],
