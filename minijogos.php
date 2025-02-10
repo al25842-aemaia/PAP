@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -6,6 +7,7 @@
     <title>Minijogos Futebol11</title>
     <link rel="stylesheet" href="css/menu.css"> <!-- CSS do menu -->
     <link rel="stylesheet" href="css/footer.css"> <!-- CSS do footer -->
+    <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/minijogos.css"> <!-- CSS específico para os minijogos -->
 </head>
 <body>

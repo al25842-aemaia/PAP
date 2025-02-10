@@ -1,0 +1,28 @@
+menu tipo adimin/normal:
+<?php
+include_once 'autenticacao.php';
+?>
+<nav>
+    <ul class="menu">
+        <li><a href="pagina_principal.php">Página Principal</a></li>
+        <li><a href="minijogos">Viagens</a></li>
+        <li><a href="noticias.php">Alugar/Comprar Carros</a></li>
+
+        <?php if(!estaAutenticado()) { ?>
+            <li><a href="Registo.php">Registo</a></li>
+            <li><a href="login.php">Login</a></li>
+        <?php } ?>
+
+        <?php if(eAdmin()) { ?>
+            <li><a href="adicionar_noticia.php">Adicionar Carro</a></li>
+            <li><a href="questionario_jogador.php">Adicionar Viagem</a></li>
+            <li><a href="questionario_clube.php">Adicionar Viagem</a></li>
+            <li><a href="questionario_nacionalidade.php">Adicionar Viagem</a></li>
+            <li><a href="questionario_posicao.php">Adicionar Viagem</a></li>
+        <?php } ?>
+
+        <?php if(estaAutenticado()) { ?>
+            <li><a href="logout.php">Logout</a></li>
+        <?php } ?>
+    </ul>
+</nav>

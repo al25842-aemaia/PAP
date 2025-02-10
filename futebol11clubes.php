@@ -1,6 +1,16 @@
+<?php session_start(); ?>
 <?php
 require_once 'db_connection.php';
 session_start();
+
+// Selecionar um clube aleatório da base de dados
+$query = "SELECT id_clube, nome_clube, imagem_clube FROM clube ORDER BY RAND() LIMIT 1";
+$result = mysqli_query($conn, $query);
+$clube = mysqli_fetch_assoc($result);
+
+$clubeId = $clube['id_clube'];
+$clubeNome = $clube['nome_clube'];
+$clubeImagem = $clube['imagem_clube'];
 ?>
 <!DOCTYPE html>
 <html lang="pt">
@@ -21,13 +31,14 @@ session_start();
                 <option value="4-3-3">4-3-3 (Atacante)</option>
                 <option value="4-4-2">4-4-2</option>
                 <option value="3-5-2">3-5-2</option>
+                <option value="5-3-2">5-3-2</option>
+                <option value="4-2-3-1">4-2-3-1</option>
             </select>
         </div>
 
         <div id="field"></div>
-
         <div id="player-selection">
-            <input type="text" id="playerName" placeholder="Digite o nome do jogador">
+        <input type="text" id="playerName" placeholder="Digite o nome do jogador">
             <select id="playerPosition">
                 <option value="GR">GR</option>
                 <option value="DC1">DC1</option>
@@ -48,10 +59,10 @@ session_start();
                 <option value="PL2">PL2</option>
             </select>
             <button id="addPlayer">Adicionar Jogador</button>
-            <div id="small-square" style="display: flex; align-items: center; justify-content: center; border: 2px solid white; width: 150px; height: 150px; background-color: #333; margin: 10px auto;">
-    <img src="" alt="Clube" id="club-image" style="width: 50px; height: 50px;">
-    <span id="club-name" style="color: white; margin-left: 10px;"></span>
-</div>
+        <div id="small-square">
+            <img src="<?php echo $clubeImagem; ?>" alt="Clube" id="club-image">
+            <span id="club-name"><?php echo $clubeNome; ?></span>
+        </div>
     </main>
     <script src="js/futebol11clubes.js"></script>
 </body>
