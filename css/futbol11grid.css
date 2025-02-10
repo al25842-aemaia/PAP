@@ -8,7 +8,6 @@ body {
     align-items: center;
     justify-content: flex-start;
     height: 100vh;
-    padding-top: 20px; /* Espaço extra no topo */
 }
 
 .grid-container {

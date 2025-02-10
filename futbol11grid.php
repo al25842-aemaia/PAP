@@ -9,7 +9,8 @@
     <script defer src="js/futbol11grid.js"></script>
 </head>
 <body>
-    <?php include 'menu.php'; ?>
+    <?php require_once 'db_connection.php'; ?>
+    <?php include 'menu.php';?>
     <div class="grid-container">
         <div class="header">FUTBOL12 GRID</div>
         <div class="grid">
