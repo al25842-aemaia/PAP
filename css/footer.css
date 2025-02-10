@@ -1,18 +1,82 @@
+/* Footer Global */
 footer {
-    background-color: #333; /* Cor de fundo do rodapé */
-    color: #f2f2f2; /* Cor do texto */
-    text-align: center; /* Centraliza o texto */
-    padding: 10px; /* Preenchimento interno */
-    position: relative; /* Posição relativa para evitar problemas de sobreposição */
-    bottom: 0; /* Coloca o rodapé na parte inferior */
-    width: 100%; /* Largura total */
-}
-footer {
-    background-color: #333;
+    background: linear-gradient(to right, #0b0b0b, #121212);
     color: #f2f2f2;
-    text-align: center;
-    padding: 10px 0;
-    position: relative;
-    bottom: 0;
+    font-size: 14px;
+    padding: 50px 0 20px;
     width: 100%;
+    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.3);
 }
+
+/* Container */
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Parte superior */
+.footer-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+/* Logo */
+.footer-logo img {
+    max-width: 180px;
+    transition: transform 0.3s ease;
+}
+
+.footer-logo img:hover {
+    transform: scale(1.05);
+}
+
+/* Menu */
+.footer-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.footer-nav ul li {
+    display: inline;
+}
+
+.footer-nav ul li a {
+    color: #f2f2f2;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.footer-nav ul li a:hover {
+    color: #ffcc00;
+}
+
+/* Parte do meio */
+.footer-middle {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+    margin-bottom: 20px;
+    padding: 0 15px;
+}
+
+.footer-section h3 {
+    font-size: 18px;
+    color: #ffcc00;
+   

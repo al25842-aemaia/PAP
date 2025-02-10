@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <?php
 require_once 'db_connection.php';
 
@@ -42,6 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/menu.css">
     <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/registro.css">
     <title>Registrar</title>
 </head>

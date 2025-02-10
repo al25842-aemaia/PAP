@@ -99,6 +99,7 @@ button:hover {
     color: white;
     margin-left: 10px;
 }
+
 #suggestionBox {
     position: absolute;
     background: white;
@@ -118,4 +119,19 @@ button:hover {
 
 .suggestion:hover {
     background: #ddd;
+}
+.position.selected {
+    border: 2px solid yellow;
+}
+
+.player-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.player-name {
+    font-size: 0.8em;
+    font-weight: bold;
+    color: black;
 }

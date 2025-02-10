@@ -1,44 +1,44 @@
+<?php session_start(); ?>
 <?php
-require_once 'db_connection.php';
-
 session_start();
+
+include_once 'autenticacao.php';
+
+proibirAutenticado();
+
+include 'db_connection.php';  // Conexão com o banco de dados
+
 $error = '';
 
-// Verificar se o formulário foi enviado
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $utilizador = $_POST['username'];
+    $senha = $_POST['password'];
 
-    // Verificar credenciais
-    $stmt = $pdo->prepare("SELECT * FROM utilizadores WHERE utilizador = :username");
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
+    $stmt = $pdo->prepare("SELECT * FROM utilizadores WHERE utilizador = ?");
+    $stmt->execute([$utilizador]);
+    $user = $stmt->fetch();
 
-    if ($stmt->rowCount() === 1) {
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        // Verificar a senha
-        if (password_verify($password, $user['senha'])) {
-            $_SESSION['loggedin'] = true;
-            header('Location: pagina_principal.php');
-            exit;
-        } else {
-            $error = 'Nome de utilizador ou senha inválidos.';
-        }
+    if ($user && password_verify($senha, $user['senha'])) {
+        $_SESSION['id'] = $user['id_utilizador'];
+        $_SESSION['utilizador'] = $user['utilizador'];
+        $_SESSION['tipo'] = $user['tipo'];
+
+        header('Location: index.php');
+        exit;
     } else {
-        $error = 'Nome de utilizador ou senha inválidos.';
+        $error = "<p style='color: red;'>Email ou senha incorretos!</p>";
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="http://localhost/PAP/css/menu.css">
-    <link rel="stylesheet" href="http://localhost/PAP/css/footer.css">
-    <link rel="stylesheet" href="http://localhost/PAP/css/login.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/login.css">
 
     <title>Login</title>
 </head>

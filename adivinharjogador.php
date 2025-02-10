@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -6,9 +7,9 @@
     <title>Adivinhar Jogador</title>
     <link rel="stylesheet" href="css/menu.css"> <!-- CSS do menu -->
     <link rel="stylesheet" href="css/footer.css"> <!-- CSS do footer -->
+    <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/adivinharjogador.css"> <!-- CSS específico da página -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome -->
-</head>
+    </head>
 <body>
 
 <?php include 'menu.php'; ?>
