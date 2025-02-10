@@ -61,13 +61,6 @@ $clubes = $pdo->query("SELECT id_clube, nome_clube FROM clube")->fetchAll(PDO::F
 $nacionalidades = $pdo->query("SELECT id_nacionalidade, nacionalidade FROM nacionalidade")->fetchAll(PDO::FETCH_ASSOC);
 $posicoes = $pdo->query("SELECT id_posicao, nome_posicao FROM posicoes")->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
-<?php
-session_start();
-
-
-?>
-
 <!DOCTYPE html>
 <html lang="pt">
 <head>

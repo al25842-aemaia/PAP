@@ -13,14 +13,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "Posição cadastrada com sucesso!";
 }
 ?>
-
-<?php
-session_start();
-
-
-?>
-
-
 <!DOCTYPE html>
 <html lang="pt">
 <head>
