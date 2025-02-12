@@ -1,4 +1,3 @@
-<?php session_start(); ?>
 <?php
 require_once 'db_connection.php';
 
