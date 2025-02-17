@@ -1,4 +1,3 @@
-<?php session_start(); ?>
 <?php
 require_once 'db_connection.php';
 session_start();
@@ -18,9 +17,12 @@ $clubeImagem = $clube['imagem_clube'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Futebol 11 Clubes</title>
+    <link rel="stylesheet" href="css/menu.css"> <!-- CSS do menu -->
+    <link rel="stylesheet" href="css/footer.css"> <!-- CSS do footer -->
     <link rel="stylesheet" href="css/futebol11clubes.css">
 </head>
 <body>
+<?php include 'menu.php'; ?>
     <header>
         <h1>Simulador de Equipas</h1>
     </header>
@@ -64,6 +66,7 @@ $clubeImagem = $clube['imagem_clube'];
             <span id="club-name"><?php echo $clubeNome; ?></span>
         </div>
     </main>
+    <?php include 'footer.php'; ?>
     <script src="js/futebol11clubes.js"></script>
 </body>
 </html>

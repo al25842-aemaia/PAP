@@ -32,6 +32,11 @@
             <img src="imagens/futbol12grid.png" alt="futebol12grid"> <!-- Imagem do minijogo 3 -->
             <button>Play</button>
         </div>
+        <!-- Exemplo do quarto minijogo -->
+        <div class="game-item" onclick="navigateTo('quizFutebol.php')">
+            <img src="imagens/futbol12grid.png" alt="quiz do futebol"> <!-- Imagem do minijogo 4 -->
+            <button>Play</button>
+        </div>
 
         <!-- Continue adicionando mais minijogos seguindo o mesmo formato -->
     </div>

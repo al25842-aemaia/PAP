@@ -13,7 +13,7 @@ include_once 'autenticacao.php';
         <?php } ?>
 
         <?php if(eAdmin()) { ?>
-            <li><a href="adicionar_noticia.php">Adicionar Nnoticias</a></li>
+            <li><a href="adicionar_noticia.php">Adicionar Noticias</a></li>
             <li><a href="questionario_jogador.php">Adicionar Jogadores</a></li>
             <li><a href="questionario_clube.php">Adicionar Clubes</a></li>
             <li><a href="questionario_nacionalidade.php">Adicionar nacionalidades</a></li>
