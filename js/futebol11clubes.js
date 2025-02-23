@@ -12,11 +12,11 @@ fetch('getClubs.php')
     });
 
 const positionsMap = {
-    "4-3-3": [["EE", "PL1", "ED"], ["MC1", "MCO", "MC2"], ["DE", "DC1", "DC2", "DD"], ["GR"]],
-    "4-4-2": [["PL1", "PL2"], ["ME", "MCO", "MDC", "MD"], ["DE", "DC1", "DC2", "DD"], ["GR"]],
-    "3-5-2": [["PL1", "PL2"], ["ME", "MC1", "MDC", "MC2", "MD"], ["DC1", "DC2", "DC3"], ["GR"]],
-    "5-3-2": [["PL1", "PL2"], ["MC1", "MDC", "MC2"], ["DE", "DC1", "DC2", "DC3", "DD"], ["GR"]],
-    "4-2-3-1": [["PL1"], ["EE", "MCO", "ED"], ["MDC1", "MDC2"], ["DE", "DC1", "DC2", "DD"], ["GR"]]
+    "4-3-3": [["GR"], ["DC1", "DC2", "DE", "DD"], ["MC1", "MCO", "MC2"], ["EE", "PL1", "ED"]],
+    "4-4-2": [["GR"], ["DC1", "DC2", "DE", "DD"], ["ME", "MCO", "MDC", "MD"], ["PL1", "PL2"]],
+    "3-5-2": [["GR"], ["DC1", "DC2", "DC3"], ["ME", "MC1", "MDC", "MC2", "MD"], ["PL1", "PL2"]],
+    "5-3-2": [["GR"], ["DE", "DC1", "DC2", "DC3", "DD"], ["MC1", "MDC", "MC2"], ["PL1", "PL2"]],
+    "4-2-3-1": [["GR"], ["DC1", "DC2", "DE", "DD"], ["MDC1", "MDC2"], ["EE", "MCO", "ED"], ["PL1"]]
 };
 
 function generateField(tactic) {
@@ -28,7 +28,7 @@ function generateField(tactic) {
     const rowHeight = fieldHeight / rows;
 
     positions.forEach((row, rowIndex) => {
-        const rowY = rowIndex * rowHeight + rowHeight / 2;
+        const rowY = (rows - rowIndex - 1) * rowHeight + rowHeight / 2; // De baixo para cima
         const cols = row.length;
         const fieldWidth = field.clientWidth;
         const colWidth = fieldWidth / cols;
@@ -44,6 +44,11 @@ function generateField(tactic) {
             positionDiv.style.top = `${rowY}px`;
             positionDiv.style.transform = "translate(-50%, -50%)";
 
+            positionDiv.addEventListener("click", function () {
+                document.querySelectorAll(".position").forEach(p => p.classList.remove("selected"));
+                this.classList.add("selected");
+            });
+
             field.appendChild(positionDiv);
         });
     });
@@ -58,34 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.getElementById("addPlayer").addEventListener("click", function () {
-    let name = document.getElementById("playerName").value;
-    let position = document.getElementById("playerPosition").value;
-
-    if (!name.trim()) {
-        alert("Por favor, insira um nome de jogador.");
-        return;
-    }
-
-    fetch(`checkPlayer2.php?name=${name}&club=${selectedClub}`)
-        .then(response => response.json())
-        .then(data => {
-            if (!data.exists) {
-                alert("Esse jogador não existe ou não pertence ao clube!");
-                return;
-            }
-
-            let positionDiv = document.querySelector(`.position[data-pos="${position}"]`);
-            if (!positionDiv || positionDiv.innerHTML !== position) {
-                alert("Essa posição já está ocupada!");
-                return;
-            }
-
-            positionDiv.innerHTML = `<div class='player'>${name}</div>`;
-        });
-});
-document.getElementById("addPlayer").addEventListener("click", function () {
     let name = document.getElementById("playerName").value.trim();
-    let positionElement = document.querySelector(".position.selected"); // Obtém a posição selecionada
+    let positionElement = document.querySelector(".position.selected");
 
     if (!name) {
         alert("Por favor, insira um nome de jogador.");
@@ -107,19 +86,16 @@ document.getElementById("addPlayer").addEventListener("click", function () {
                 return;
             }
 
-            // Adicionar jogador à posição escolhida
+            // Verifica se a posição já está ocupada
+            if (positionElement.querySelector(".player-image")) {
+                alert("Essa posição já está ocupada!");
+                return;
+            }
+
             positionElement.innerHTML = `
-                <img src="${data.image}" class="player-image" alt="${data.name}">
-                <div class="player-name">${data.name}</div>
+                <img src="${data.image}" class="player-image" alt="${data.name}" style="width: 50px; height: 50px; border-radius: 50%;">
+                <div class="player-name" style="font-size: 12px; margin-top: 5px;">${data.name}</div>
             `;
         })
         .catch(error => console.error("Erro ao buscar jogador:", error));
-});
-
-// Permite selecionar uma posição antes de adicionar um jogador
-document.querySelectorAll(".position").forEach(pos => {
-    pos.addEventListener("click", function () {
-        document.querySelectorAll(".position").forEach(p => p.classList.remove("selected"));
-        this.classList.add("selected");
-    });
 });
