@@ -1,9 +1,9 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     let botoes = document.querySelectorAll(".opcao");
     let respostasSelecionadas = new Array(10).fill(null);
 
     botoes.forEach(botao => {
-        botao.addEventListener("click", function() {
+        botao.addEventListener("click", function () {
             let perguntaDiv = this.closest(".pergunta");
             let index = [...document.querySelectorAll(".pergunta")].indexOf(perguntaDiv);
             respostasSelecionadas[index] = this.innerText;
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    window.verificarRespostas = function() {
+    document.getElementById("verificar").addEventListener("click", function () {
         let perguntas = document.querySelectorAll(".pergunta");
         let acertos = 0;
 
@@ -38,5 +38,9 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("resultado").innerText = `Você acertou ${acertos} de 10 perguntas!`;
         document.getElementById("verificar").style.display = "none";
         document.getElementById("jogar-novamente").style.display = "block";
-    };
+    });
+
+    document.getElementById("jogar-novamente").addEventListener("click", function () {
+        location.reload();
+    });
 });

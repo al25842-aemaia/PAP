@@ -1,67 +1,53 @@
 <?php
-require_once 'db_connection.php';
-session_start();
+$host = "localhost";
+$user = "root";
+$password = "";
+$dbname = "pap_futebol";
 
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Erro de conexão: " . $e->getMessage());
+$conn = new mysqli($host, $user, $password, $dbname);
+if ($conn->connect_error) {
+    die("Erro na conexão: " . $conn->connect_error);
 }
 
-// Buscar perguntas variadas
-$perguntas = [
-    "Qual jogador do clube %s joga como %s?",
-    "Qual é o clube do jogador %s?",
-    "Qual é a nacionalidade do jogador %s?"
-];
+$sql = "SELECT j.id_jogador, j.nome_jogador, n.nacionalidade 
+        FROM jogador j 
+        JOIN nacionalidade n ON j.id_nacionalidade = n.id_nacionalidade 
+        ORDER BY RAND() LIMIT 10";
 
-$query = "
-    SELECT j.nome_jogador, c.nome_clube, p.nome_posicao, n.nacionalidade
-    FROM jogador j
-    JOIN clube c ON j.id_clube = c.id_clube
-    JOIN nacionalidade n ON j.id_nacionalidade = n.id_nacionalidade
-    JOIN jogador_posicoes jp ON j.id_jogador = jp.id_jogador
-    JOIN posicoes p ON jp.id_posicao = p.id_posicao
-    ORDER BY RAND() LIMIT 10
-";
+$result = $conn->query($sql);
+$perguntas = [];
 
-$stmt = $pdo->query($query);
-$dados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $id_jogador = $row['id_jogador'];
+        $nome_jogador = $row['nome_jogador'];
+        $resposta_correta = $row['nacionalidade'];
 
-$quiz = [];
+        // Buscar três outras nacionalidades diferentes
+        $sql_opcoes = "SELECT DISTINCT nacionalidade FROM nacionalidade 
+                       WHERE nacionalidade != '$resposta_correta' 
+                       ORDER BY RAND() LIMIT 3";
 
-foreach ($dados as $dado) {
-    $tipoPergunta = rand(0, 2);
-    if ($tipoPergunta == 0) {
-        $pergunta = sprintf($perguntas[0], $dado['nome_clube'], $dado['nome_posicao']);
-        $respostaCorreta = $dado['nome_jogador'];
-    } elseif ($tipoPergunta == 1) {
-        $pergunta = sprintf($perguntas[1], $dado['nome_jogador']);
-        $respostaCorreta = $dado['nome_clube'];
-    } else {
-        $pergunta = sprintf($perguntas[2], $dado['nome_jogador']);
-        $respostaCorreta = $dado['nacionalidade'];
-    }
+        $res_opcoes = $conn->query($sql_opcoes);
+        $opcoes = [];
 
-    $opcoes = [$respostaCorreta];
-
-    while (count($opcoes) < 4) {
-        $randIndex = array_rand($dados);
-        $opcaoErrada = $tipoPergunta == 1 ? $dados[$randIndex]['nome_clube'] : ($tipoPergunta == 2 ? $dados[$randIndex]['nacionalidade'] : $dados[$randIndex]['nome_jogador']);
-        if (!in_array($opcaoErrada, $opcoes)) {
-            $opcoes[] = $opcaoErrada;
+        while ($row_op = $res_opcoes->fetch_assoc()) {
+            $opcoes[] = $row_op['nacionalidade'];
         }
-    }
 
-    shuffle($opcoes);
-    $quiz[] = [
-        "pergunta" => $pergunta,
-        "opcoes" => $opcoes,
-        "correta" => $respostaCorreta
-    ];
+        // Garantir que a resposta correta está na lista
+        $opcoes[] = $resposta_correta;
+        shuffle($opcoes);
+
+        $perguntas[] = [
+            "pergunta" => "Qual é a nacionalidade do jogador $nome_jogador?",
+            "opcoes" => $opcoes,
+            "resposta" => $resposta_correta
+        ];
+    }
 }
 
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -74,20 +60,20 @@ foreach ($dados as $dado) {
 </head>
 <body>
     <div class="container">
-        <h1>Quiz de Futebol</h1>
-        <div id="quiz-container">
-            <?php foreach ($quiz as $index => $q): ?>
-                <div class="pergunta" data-resposta="<?= $q['correta'] ?>">
-                    <p><?= $q['pergunta'] ?></p>
-                    <?php foreach ($q['opcoes'] as $opcao): ?>
-                        <button class="opcao" onclick="selecionarResposta(this, <?= $index ?>)"><?= $opcao ?></button>
+        <h1>Quiz de Nacionalidades</h1>
+        <div id="quiz">
+            <?php foreach ($perguntas as $index => $pergunta): ?>
+                <div class="pergunta" data-resposta="<?= $pergunta['resposta']; ?>">
+                    <h3><?= $pergunta['pergunta']; ?></h3>
+                    <?php foreach ($pergunta['opcoes'] as $opcao): ?>
+                        <button class="opcao"><?= $opcao; ?></button>
                     <?php endforeach; ?>
                 </div>
             <?php endforeach; ?>
-            <button id="verificar" onclick="verificarRespostas()">Verificar Respostas</button>
-            <button id="jogar-novamente" onclick="location.reload()" style="display: none;">Jogar de Novo</button>
         </div>
-        <div id="resultado"></div>
+        <button id="verificar">Verificar Respostas</button>
+        <p id="resultado"></p>
+        <button id="jogar-novamente" style="display:none;">Jogar Novamente</button>
     </div>
     <script src="js/quizFutebol.js"></script>
 </body>
