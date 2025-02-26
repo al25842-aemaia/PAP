@@ -10,7 +10,8 @@
     <script defer src="js/futbol11grid.js"></script>
 </head>
 <body>
-    <?php include 'menu.php'; ?>
+    <?php require_once 'db_connection.php'; ?>
+    <?php include 'menu.php';?>
     <div class="grid-container">
         <div class="header">FUTBOL11 GRID</div>
         <div class="grid">
@@ -22,54 +23,37 @@
             die("Erro de conexão: " . $conn->connect_error);
         }
 
-        // Busca todos os clubes
-        $clubes = $conn->query("SELECT id_clube, nome_clube, imagem_clube FROM clube");
-        $clubesData = $clubes->fetch_all(MYSQLI_ASSOC);
+// Busca 3 nacionalidades aleatórias
+$nacionalidades = $conn->query("SELECT nacionalidade, imagem_nacionalidade FROM nacionalidade ORDER BY RAND() LIMIT 3");
+$nacionalidadeData = $nacionalidades->fetch_all(MYSQLI_ASSOC);
 
-        // Busca todas as nacionalidades com jogadores em pelo menos 2 clubes diferentes
-        $nacionalidades = $conn->query("SELECT n.id_nacionalidade, n.nacionalidade, n.imagem_nacionalidade FROM nacionalidade n INNER JOIN jogador j ON n.id_nacionalidade = j.id_nacionalidade GROUP BY n.id_nacionalidade, n.nacionalidade, n.imagem_nacionalidade HAVING COUNT(DISTINCT j.id_clube) >= 2");
-        $nacionalidadeData = $nacionalidades->fetch_all(MYSQLI_ASSOC);
+// Busca 3 clubes aleatórios
+$clubes = $conn->query("SELECT nome_clube, imagem_clube FROM clube ORDER BY RAND() LIMIT 3");
+$clubesData = $clubes->fetch_all(MYSQLI_ASSOC);
 
-        shuffle($nacionalidadeData);
-        $nacionalidadeData = array_slice($nacionalidadeData, 0, 3);
+// Geração do cabeçalho das bandeiras (Nacionalidades)
+echo '<div class="row">';
+echo '<div class="cell empty"></div>'; // Célula vazia no canto superior esquerdo
+foreach ($nacionalidadeData as $nacionalidade) {
+    echo '<div class="cell flag"><img src="C:/xampp/htdocs/PAP/imagens_nacionalidade/' . $nacionalidade['imagem_nacionalidade'] . '" alt="' . $nacionalidade['nacionalidade'] . '" style="width: 50px; height: auto;"></div>';
+}
+echo '</div>';
 
-        // Cabeçalho com bandeiras das nacionalidades
-        echo '<div class="row">';
-        echo '<div class="cell empty"></div>';
-        foreach ($nacionalidadeData as $nacionalidade) {
-            echo '<div class="cell flag">';
-            echo '<img src="imagens_nacionalidade/' . $nacionalidade['imagem_nacionalidade'] . '" alt="' . $nacionalidade['nacionalidade'] . '" style="width: 50px; height: auto;">';
-            echo '</div>';
-        }
-        echo '</div>';
-
-        // Geração das linhas dos clubes
-        foreach ($clubesData as $clube) {
-            echo '<div class="row">';
-            echo '<div class="cell club">';
-            echo '<img src="imagens_clube/' . $clube['imagem_clube'] . '" alt="' . $clube['nome_clube'] . '" style="width: 50px; height: auto;">';
-            echo '</div>';
-
-            foreach ($nacionalidadeData as $nacionalidade) {
-                $jogadores = $conn->query("SELECT nome_jogador, imagem_jogador FROM jogador WHERE id_clube = {$clube['id_clube']} AND id_nacionalidade = {$nacionalidade['id_nacionalidade']}");
-                $jogadoresData = [];
-
-                while ($row = $jogadores->fetch_assoc()) {
-                    $caminhoImagem = "imagens_jogador/" . $row['imagem_jogador'];
-                    if (file_exists($caminhoImagem) && is_file($caminhoImagem)) {
-                        $imagemBase64 = base64_encode(file_get_contents($caminhoImagem));
-                        $jogadoresData[] = $row['nome_jogador'] . "|" . $imagemBase64;
-                    }
-                }
-
-                echo '<div class="cell guess" data-clube="' . $clube['nome_clube'] . '" data-nacionalidade="' . $nacionalidade['nacionalidade'] . '" data-jogadores="' . implode(',', $jogadoresData) . '"></div>';
-            }
-            echo '</div>';
-        }
+// Geração das linhas de clubes (Clubes e suas nacionalidades)
+foreach ($clubesData as $clube) {
+    echo '<div class="row">';
+    echo '<div class="cell club"><img src="C:/xampp/htdocs/PAP/imagens_clube/' . $clube['imagem_clube'] . '" alt="' . $clube['nome_clube'] . '" style="width: 50px; height: auto;"></div>';
+    foreach ($nacionalidadeData as $nacionalidade) {
+        // Aqui associamos o clube com a nacionalidade nas células
+        echo '<div class="cell guess" data-clube="' . $clube['nome_clube'] . '" data-nacionalidade="' . $nacionalidade['nacionalidade'] . '"></div>';
+    }
+    echo '</div>';
+}
 
         $conn->close();
         ?>
         </div>
+
         <div class="input-area">
             <input type="text" id="player-input" placeholder="Digite o nome do jogador">
             <button id="guess-btn">Verificar</button>
@@ -82,7 +66,8 @@
             const cells = document.querySelectorAll('.cell.guess');
 
             cells.forEach(cell => {
-                const jogadores = cell.getAttribute('data-jogadores').split(',');
+                const jogadores = cell.getAttribute('data-jogadores') ? cell.getAttribute('data-jogadores').split(',') : [];
+
                 jogadores.forEach(jogador => {
                     const [nome, imagem] = jogador.split("|");
                     if (nome.toLowerCase() === playerName && imagem) {
