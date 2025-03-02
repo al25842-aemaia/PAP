@@ -1,6 +1,5 @@
 <?php
 require_once 'db_connection.php';
-proibirAutenticado();
 session_start();
 $error = '';
 $success = '';

@@ -1,61 +1,82 @@
 <?php
-require_once 'db_connection.php';
+require 'conexao.php'; // Conexão com o banco de dados
 
-session_start();
-if (!isset($_SESSION['correct_players'])) {
-    $_SESSION['correct_players'] = 0;  // Conta jogadores corretos
-}
+if (isset($_POST['jogador']) && isset($_POST['formacao']) && isset($_POST['jogadoresSelecionados'])) {
+    $nomeJogador = $_POST['jogador'];
+    $formacao = $_POST['formacao'];
+    $jogadoresSelecionados = json_decode($_POST['jogadoresSelecionados'], true);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $playerName = $_POST["playerName"];
-    
-    // Consulta jogador e posições
-    $sql = "SELECT jogador.*, clube.nome_clube, clube.imagem_clube, posicoes.nome_posicao 
-            FROM jogador 
-            JOIN clube ON jogador.id_clube = clube.id_clube 
-            JOIN jogador_posicoes ON jogador.id_jogador = jogador_posicoes.id_jogador 
-            JOIN posicoes ON jogador_posicoes.id_posicao = posicoes.id_posicao 
-            WHERE jogador.nome_jogador = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $playerName);
+    // Buscar o jogador no banco de dados
+    $stmt = $conn->prepare("SELECT j.id_jogador, j.nome_jogador, j.imagem_jogador, jp.id_posicao FROM jogador j 
+                            JOIN jogador_posicoes jp ON j.id_jogador = jp.id_jogador
+                            WHERE j.nome_jogador = ?");
+    $stmt->bind_param("s", $nomeJogador);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    $posicoes = [];
-    if ($result->num_rows > 0) {
-        $jogador = $result->fetch_assoc();
-        $clubeNome = $jogador["nome_clube"];
-        $clubeImagem = "imagens_nacionalidade/" . $jogador["imagem_clube"];
-
-        // Obtenção de posições e contagem de opções
-        while ($row = $result->fetch_assoc()) {
-            $posicoes[] = $row["nome_posicao"];
+    $posicoesJogador = [];
+    $dadosJogador = null;
+    
+    while ($row = $result->fetch_assoc()) {
+        if (!$dadosJogador) {
+            $dadosJogador = [
+                'id' => $row['id_jogador'],
+                'nome' => $row['nome_jogador'],
+                'imagem' => $row['imagem_jogador']
+            ];
         }
-
-        // Atualização de sessão e clube aleatório
-        $_SESSION['correct_players']++;
-        if ($_SESSION['correct_players'] < 11) {
-            echo "<script>
-                alert('Jogador $playerName adicionado com sucesso!');
-                var posicoes = " . json_encode($posicoes) . ";
-                document.getElementById('positions-options').innerHTML = posicoes.map(pos => 
-                    `<div class='position-option'>${pos}</div>`).join('');
-                document.getElementById('club-icon').src = '$clubeImagem';
-                document.getElementById('club-name').innerText = '$clubeNome';
-            </script>";
-        } else {
-            echo "<script>
-                alert('Formação completa com sucesso!');
-                window.location.href = 'futebol11clubes.php';
-            </script>";
-            $_SESSION['correct_players'] = 0;
-        }
-    } else {
-        echo "<script>alert('Jogador ou clube/posição incorretos.');</script>";
+        $posicoesJogador[] = $row['id_posicao'];
     }
-    $stmt->close();
-}
 
-$conn->close();
-echo "<script>window.location.href='futebol11clubes.php';</script>";
+    if (!$dadosJogador) {
+        echo json_encode(["error" => "Jogador não encontrado."]);
+        exit;
+    }
+
+    // Mapeamento de posições por formação
+    $formacoes = [
+        "4-3-3" => [1, 2, 3, 3, 4, 5, 10, 12, 17, 15, 16],
+        "4-2-4" => [1, 2, 3, 3, 4, 5, 10, 12, 13, 15, 16],
+        "4-4-2" => [1, 2, 3, 3, 4, 5, 10, 12, 12, 16, 16]
+    ];
+    
+    if (!isset($formacoes[$formacao])) {
+        echo json_encode(["error" => "Formação inválida."]);
+        exit;
+    }
+    
+    $posicoesFormacao = $formacoes[$formacao];
+    $posicoesDisponiveis = array_intersect($posicoesJogador, $posicoesFormacao);
+    
+    // Verificar quais posições já estão ocupadas
+    $posicaoEscolhida = null;
+    $posicoesLivres = [];
+    foreach ($posicoesDisponiveis as $posicao) {
+        if (!in_array($posicao, $jogadoresSelecionados)) {
+            $posicoesLivres[] = $posicao;
+        }
+    }
+    
+    if (count($posicoesLivres) == 1) {
+        $posicaoEscolhida = $posicoesLivres[0];
+    }
+    
+    if ($posicaoEscolhida) {
+        echo json_encode([
+            "id" => $dadosJogador['id'],
+            "nome" => $dadosJogador['nome'],
+            "imagem" => $dadosJogador['imagem'],
+            "posicao" => $posicaoEscolhida
+        ]);
+    } else {
+        echo json_encode([
+            "id" => $dadosJogador['id'],
+            "nome" => $dadosJogador['nome'],
+            "imagem" => $dadosJogador['imagem'],
+            "posicoes" => $posicoesLivres
+        ]);
+    }
+} else {
+    echo json_encode(["error" => "Dados insuficientes."]);
+}
 ?>

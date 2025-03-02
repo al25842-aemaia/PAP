@@ -78,7 +78,7 @@ document.getElementById("addPlayer").addEventListener("click", function () {
 
     let position = positionElement.getAttribute("data-pos");
 
-    fetch(`checkPlayer2.php?name=${encodeURIComponent(name)}&club=${selectedClub}&position=${position}`)
+    fetch(`checkPlayer.php?name=${encodeURIComponent(name)}&club=${selectedClub}&position=${position}`)
         .then(response => response.json())
         .then(data => {
             if (!data.exists) {
