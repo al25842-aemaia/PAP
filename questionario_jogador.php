@@ -1,7 +1,8 @@
-<?php session_start(); ?>
+<?php session_start(); 
+    proibirNaoAdmin();
+    require_once 'db_connection.php';
+?>
 <?php
-require_once 'db_connection.php';
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nome_jogador = $_POST['nome_jogador'];
     $aposentado = $_POST['aposentado'];

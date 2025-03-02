@@ -57,8 +57,10 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz de Futebol</title>
     <link rel="stylesheet" href="css/quizFutebol.css">
+    <link rel="stylesheet" href="css/menu.css">
 </head>
 <body>
+<?php include 'menu.php';?>
     <div class="container">
         <h1>Quiz de Nacionalidades</h1>
         <div id="quiz">

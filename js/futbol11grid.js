@@ -4,18 +4,25 @@ cells.forEach(cell => {
 
     const jogadores = jogadoresData.split(',');
     jogadores.forEach(jogador => {
-        const [nome, imagem] = jogador.split("|");
-        if (nome.toLowerCase() === playerName) {
-            const imgSrc = imagem === 'fallback-image.png' 
-                ? 'path/to/fallback-image.png' 
-                : `data:image/png;base64,${imagem}`;
-            cell.innerHTML = `<img src="${imgSrc}" alt="${nome}" style="width: 50px; height: auto;">`;
-            cell.classList.add('correct');
-        }
+        const [nome, imagem] = jogador.split("|").map(str => str.trim()); // Remove espaços extras
 
-        input.value = ""; // Limpa o campo
+        if (nome.toLowerCase() === playerName.toLowerCase()) {
+            if (!cell.classList.contains('correct')) { // Evita sobrescrita se já estiver preenchido
+                const imgSrc = imagem === 'fallback-image.png' 
+                    ? 'path/to/fallback-image.png' 
+                    : `data:image/png;base64,${imagem}`;
+                
+                cell.innerHTML = `
+                    <img src="${imgSrc}" alt="${nome}" style="width: 50px; height: auto;">
+                    <p>${nome}</p>
+                `;
+                cell.classList.add('correct');
+            }
+        }
     });
 });
 
 // Limpa o campo de entrada fora do loop
-playerInput.value = ""; 
+if (playerInput) {
+    playerInput.value = "";
+}

@@ -1,6 +1,8 @@
-<?php session_start(); ?>
+<?php session_start(); 
+    proibirNaoAdmin();
+    require_once 'db_connection.php';
+?>
 <?php
-require_once 'db_connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nacionalidade = $_POST['nacionalidade'];
