@@ -34,7 +34,7 @@
         </div>
         <!-- Exemplo do quarto minijogo -->
         <div class="game-item" onclick="navigateTo('quizFutebol.php')">
-            <img src="imagens/" alt="quizfutebol"> <!-- Imagem do minijogo 4 -->
+            <img src="imagens/quizfutebol.jpg" alt="quizfutebol"> <!-- Imagem do minijogo 4 -->
             <button>Play</button>
         </div>
 
