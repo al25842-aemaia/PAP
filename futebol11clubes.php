@@ -100,7 +100,7 @@ function generateField(tactic) {
         "GR": [],
         "DD": [], "DC1": [], "DC2": [], "DE": [],
         "MC1": [], "MCO": [], "MC2": [],
-        "ED": [], "PL": [], "EE": [],
+        "EE": [], "PL": [], "ED": [],
         "MD": [], "MDC1": [], "MDC2": [],
         "PL1": [], "PL2": []
     };
@@ -114,7 +114,7 @@ function generateField(tactic) {
     }
 
     // Organizing players into lines, starting with the GR at the bottom
-    createLine(["ED", "PL", "EE"], "line1");
+    createLine(["EE", "PL", "ED"], "line1");
     createLine(["MC1", "MCO", "MC2"], "line2");
     createLine(["DD", "DC1", "DC2", "DE"], "line3");
     createLine(["GR"], "line4");  // GR at the bottom
