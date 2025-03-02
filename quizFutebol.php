@@ -1,13 +1,5 @@
 <?php
-$host = "localhost";
-$user = "root";
-$password = "";
-$dbname = "pap_futebol";
-
-$conn = new mysqli($host, $user, $password, $dbname);
-if ($conn->connect_error) {
-    die("Erro na conexão: " . $conn->connect_error);
-}
+require_once 'db_connection.php';
 
 $sql = "SELECT j.id_jogador, j.nome_jogador, n.nacionalidade 
         FROM jogador j 
@@ -61,6 +53,7 @@ $conn->close();
 </head>
 <body>
 <?php include 'menu.php';?>
+    <main>
     <div class="container">
         <h1>Quiz de Nacionalidades</h1>
         <div id="quiz">
@@ -78,5 +71,6 @@ $conn->close();
         <button id="jogar-novamente" style="display:none;">Jogar Novamente</button>
     </div>
     <script src="js/quizFutebol.js"></script>
+    </main>
 </body>
 </html>

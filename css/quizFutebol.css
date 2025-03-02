@@ -7,7 +7,7 @@
 }
 
 /* Estilo geral do corpo da página */
-body {
+main {
     display: flex;
     justify-content: center;
     align-items: center;
