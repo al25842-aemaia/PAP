@@ -15,7 +15,7 @@
     <div class="grid-container">
         <div class="header">FUTBOL11 GRID</div>
         <div class="grid">
-        <?php
+<?php
 // Busca 3 nacionalidades aleatórias
 $nacionalidades = $conn->query("SELECT nacionalidade, imagem_nacionalidade FROM nacionalidade ORDER BY RAND() LIMIT 3");
 $nacionalidadeData = $nacionalidades->fetch_all(MYSQLI_ASSOC);
