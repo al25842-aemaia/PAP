@@ -1,159 +1,77 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #121212;
-    color: white;
     text-align: center;
-    margin: 0;
-    padding: 0;
+    background-color: #f4f4f4;
 }
 
-header {
-    background: #1e1e1e;
+.container {
+    margin: 20px auto;
+    width: 90%;
+}
+
+#campo-container {
+    width: 500px;
+    height: 600px;
+    background-color: #2d2d2d;
+    border: 5px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    position: relative;
+}
+
+#campo {
+    display: grid;
+    gap: 10px;
+    width: 90%;
+    height: 90%;
+    position: absolute;
+}
+
+.posicao {
+    width: 80px;
+    height: 80px;
+    background-color: green;
     color: white;
-    padding: 15px;
-    font-size: 1.4em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border-radius: 10px;
     text-transform: uppercase;
 }
 
-h1 {
-    font-size: 1.8em;
-    margin: 10px 0;
-    font-weight: bold;
-}
-
-#field {
-    width: 90%;
-    max-width: 1000px;
-    height: 550px;
-    background: linear-gradient(180deg, #006400, #228B22);
-    margin: 20px auto;
-    position: relative;
-    border-radius: 15px;
-    border: 3px solid white;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-content: center;
-}
-
-/* Estilo das posições */
-.position {
-    width: 85px;
-    height: 85px;
-    background: white;
+.controles {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: bold;
-    color: black;
-    border-radius: 8px;
-    font-size: 1em;
-    position: absolute;
-    transition: 0.3s ease-in-out;
+    margin-top: 20px;
+    gap: 15px;
 }
 
-.position:hover {
-    transform: scale(1.1);
-    background: #FFD700;
+#clubeImagem {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
 }
 
-/* Botões */
 button {
-    padding: 12px 25px;
-    margin-top: 10px;
-    cursor: pointer;
-    background-color: #008CBA;
-    color: white;
+    padding: 10px;
     border: none;
-    border-radius: 8px;
-    font-size: 1.1em;
-    font-weight: bold;
-    transition: 0.3s ease-in-out;
+    background-color: #007BFF;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
 button:hover {
-    background-color: #005f73;
-    transform: scale(1.05);
+    background-color: #0056b3;
 }
 
-.player {
-    background: yellow;
-    padding: 8px;
-    border-radius: 8px;
-    font-weight: bold;
-}
-
-#player-selection {
-    margin-top: 25px;
-}
-
-#tactic-selection {
-    margin-top: 15px;
-}
-
-#small-square {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid white;
-    width: 160px;
-    height: 160px;
-    background-color: #444;
-    margin: 15px auto;
-    border-radius: 10px;
+input {
     padding: 10px;
-}
-
-#small-square img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-}
-
-#club-name {
-    color: white;
-    margin-left: 12px;
-    font-size: 1.1em;
-    font-weight: bold;
-}
-
-#suggestionBox {
-    position: absolute;
-    background: white;
-    color: black;
-    border: 1px solid #ccc;
-    width: 220px;
-    max-height: 180px;
-    overflow-y: auto;
-    z-index: 10;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-}
-
-.suggestion {
-    padding: 8px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.suggestion:hover {
-    background: #ddd;
-}
-
-.position.selected {
-    border: 3px solid yellow;
-}
-
-.player-image {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    border: 2px solid white;
-}
-
-.player-name {
-    font-size: 0.9em;
-    font-weight: bold;
-    color: black;
-    margin-top: 5px;
+    font-size: 16px;
 }

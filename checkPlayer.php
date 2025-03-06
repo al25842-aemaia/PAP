@@ -1,82 +1,33 @@
 <?php
-require 'conexao.php'; // Conexão com o banco de dados
+session_start();
+include 'db_connection.php'; 
 
-if (isset($_POST['jogador']) && isset($_POST['formacao']) && isset($_POST['jogadoresSelecionados'])) {
-    $nomeJogador = $_POST['jogador'];
-    $formacao = $_POST['formacao'];
-    $jogadoresSelecionados = json_decode($_POST['jogadoresSelecionados'], true);
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['playerName'])) {
+    $playerName = mysqli_real_escape_string($conn, $_POST['playerName']);
+    $clubeAtual = $_SESSION['clube_atual'];
 
-    // Buscar o jogador no banco de dados
-    $stmt = $conn->prepare("SELECT j.id_jogador, j.nome_jogador, j.imagem_jogador, jp.id_posicao FROM jogador j 
-                            JOIN jogador_posicoes jp ON j.id_jogador = jp.id_jogador
-                            WHERE j.nome_jogador = ?");
-    $stmt->bind_param("s", $nomeJogador);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $query = "SELECT * FROM jogador WHERE nome_jogador = '$playerName' AND id_clube = $clubeAtual";
+    $result = mysqli_query($conn, $query);
 
-    $posicoesJogador = [];
-    $dadosJogador = null;
-    
-    while ($row = $result->fetch_assoc()) {
-        if (!$dadosJogador) {
-            $dadosJogador = [
-                'id' => $row['id_jogador'],
-                'nome' => $row['nome_jogador'],
-                'imagem' => $row['imagem_jogador']
-            ];
+    if (mysqli_num_rows($result) > 0) {
+        // Adiciona jogador à sessão para controle
+        if (!in_array($playerName, $_SESSION['jogadores_adivinhados'])) {
+            $_SESSION['jogadores_adivinhados'][] = $playerName;
         }
-        $posicoesJogador[] = $row['id_posicao'];
-    }
+        
+        // Verifica se todos os jogadores foram adivinhados
+        $queryTotal = "SELECT COUNT(*) as total FROM jogador WHERE id_clube = $clubeAtual";
+        $resultTotal = mysqli_query($conn, $queryTotal);
+        $totalJogadores = mysqli_fetch_assoc($resultTotal)['total'];
 
-    if (!$dadosJogador) {
-        echo json_encode(["error" => "Jogador não encontrado."]);
-        exit;
-    }
-
-    // Mapeamento de posições por formação
-    $formacoes = [
-        "4-3-3" => [1, 2, 3, 3, 4, 5, 10, 12, 17, 15, 16],
-        "4-2-4" => [1, 2, 3, 3, 4, 5, 10, 12, 13, 15, 16],
-        "4-4-2" => [1, 2, 3, 3, 4, 5, 10, 12, 12, 16, 16]
-    ];
-    
-    if (!isset($formacoes[$formacao])) {
-        echo json_encode(["error" => "Formação inválida."]);
-        exit;
-    }
-    
-    $posicoesFormacao = $formacoes[$formacao];
-    $posicoesDisponiveis = array_intersect($posicoesJogador, $posicoesFormacao);
-    
-    // Verificar quais posições já estão ocupadas
-    $posicaoEscolhida = null;
-    $posicoesLivres = [];
-    foreach ($posicoesDisponiveis as $posicao) {
-        if (!in_array($posicao, $jogadoresSelecionados)) {
-            $posicoesLivres[] = $posicao;
+        if (count($_SESSION['jogadores_adivinhados']) == $totalJogadores) {
+            echo "Parabéns! Você adivinhou todos os jogadores!";
+            session_destroy();
+        } else {
+            echo "Jogador correto!";
         }
-    }
-    
-    if (count($posicoesLivres) == 1) {
-        $posicaoEscolhida = $posicoesLivres[0];
-    }
-    
-    if ($posicaoEscolhida) {
-        echo json_encode([
-            "id" => $dadosJogador['id'],
-            "nome" => $dadosJogador['nome'],
-            "imagem" => $dadosJogador['imagem'],
-            "posicao" => $posicaoEscolhida
-        ]);
     } else {
-        echo json_encode([
-            "id" => $dadosJogador['id'],
-            "nome" => $dadosJogador['nome'],
-            "imagem" => $dadosJogador['imagem'],
-            "posicoes" => $posicoesLivres
-        ]);
+        echo "Jogador não encontrado neste clube.";
     }
-} else {
-    echo json_encode(["error" => "Dados insuficientes."]);
 }
 ?>

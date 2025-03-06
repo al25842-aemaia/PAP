@@ -1,101 +1,129 @@
-// Carregar clubes e escolher um aleatório
-let selectedClub = null;
-fetch('getClubs.php')
-    .then(response => response.json())
-    .then(data => {
-        if (data.length > 0) {
-            const randomClub = data[Math.floor(Math.random() * data.length)];
-            document.getElementById("club-image").src = randomClub.imagem_clube;
-            document.getElementById("club-name").textContent = randomClub.nome_clube;
-            selectedClub = randomClub.id_clube;
-        }
-    });
+document.addEventListener("DOMContentLoaded", function() {
+    if (window.location.pathname.includes("jogo.php")) {
+        gerarCampo();
+        iniciarTemporizador();
+        carregarClube();
+    }
+});
 
-const positionsMap = {
-    "4-3-3": [["GR"], ["DC1", "DC2", "DE", "DD"], ["MC1", "MCO", "MC2"], ["EE", "PL1", "ED"]],
-    "4-4-2": [["GR"], ["DC1", "DC2", "DE", "DD"], ["ME", "MCO", "MDC", "MD"], ["PL1", "PL2"]],
-    "3-5-2": [["GR"], ["DC1", "DC2", "DC3"], ["ME", "MC1", "MDC", "MC2", "MD"], ["PL1", "PL2"]],
-    "5-3-2": [["GR"], ["DE", "DC1", "DC2", "DC3", "DD"], ["MC1", "MDC", "MC2"], ["PL1", "PL2"]],
-    "4-2-3-1": [["GR"], ["DC1", "DC2", "DE", "DD"], ["MDC1", "MDC2"], ["EE", "MCO", "ED"], ["PL1"]]
-};
-
-function generateField(tactic) {
-    const field = document.getElementById("field");
-    field.innerHTML = "";
-    const positions = positionsMap[tactic];
-    const rows = positions.length;
-    const fieldHeight = field.clientHeight;
-    const rowHeight = fieldHeight / rows;
-
-    positions.forEach((row, rowIndex) => {
-        const rowY = (rows - rowIndex - 1) * rowHeight + rowHeight / 2; // De baixo para cima
-        const cols = row.length;
-        const fieldWidth = field.clientWidth;
-        const colWidth = fieldWidth / cols;
-
-        row.forEach((pos, colIndex) => {
-            const positionDiv = document.createElement("div");
-            positionDiv.classList.add("position");
-            positionDiv.setAttribute("data-pos", pos);
-            positionDiv.innerHTML = pos;
-
-            const colX = colIndex * colWidth + colWidth / 2;
-            positionDiv.style.left = `${colX}px`;
-            positionDiv.style.top = `${rowY}px`;
-            positionDiv.style.transform = "translate(-50%, -50%)";
-
-            positionDiv.addEventListener("click", function () {
-                document.querySelectorAll(".position").forEach(p => p.classList.remove("selected"));
-                this.classList.add("selected");
-            });
-
-            field.appendChild(positionDiv);
-        });
-    });
+function carregarClube() {
+    document.getElementById("clubeImagem").src = clubeImagem;
+    document.getElementById("clubeNome").innerText = clubeNome;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const tacticSelect = document.getElementById("tactic");
-    generateField(tacticSelect.value);
-    tacticSelect.addEventListener("change", (e) => {
-        generateField(e.target.value);
-    });
+function iniciarJogo() {
+    let tactica = document.getElementById("tactica").value;
+    let tempo = document.getElementById("tempo").value;
+
+    sessionStorage.setItem("tactica", tactica);
+    sessionStorage.setItem("tempo", tempo);
+
+    window.location.href = "jogo.php";
+}
+
+function gerarCampo() {
+    let tactica = sessionStorage.getItem("tactica");
+    let posicoes = {
+        "4-3-3": {
+            ataque: ["EE", "PL", "ED"],
+            meio: ["MC", "MCO", "MC"],
+            defesa: ["DE", "DC", "DC", "DD"],
+            gr: ["GR"]
+        },
+        "4-4-2": {
+            ataque: ["PL", "PL"],
+            meio: ["ME", "MC", "MC", "MD"],
+            defesa: ["DE", "DC", "DC", "DD"],
+            gr: ["GR"]
+        }
+    };
+
+    let campo = document.getElementById("campo");
+    campo.innerHTML = "";
+    campo.style.display = "grid";
+    campo.style.gridTemplateRows = "repeat(4, 1fr)";
+    campo.style.justifyContent = "center";
+
+    if (posicoes[tactica]) {
+        Object.values(posicoes[tactica]).forEach((linha) => {
+            let linhaDiv = document.createElement("div");
+            linhaDiv.style.display = "flex";
+            linhaDiv.style.justifyContent = "center";
+            linhaDiv.style.gap = "10px";
+
+            linha.forEach(pos => {
+                let div = document.createElement("div");
+                div.classList.add("posicao");
+                div.innerText = pos;
+                div.dataset.posicao = pos;
+                div.addEventListener("click", selecionarPosicao);
+                linhaDiv.appendChild(div);
+            });
+
+            campo.appendChild(linhaDiv);
+        });
+    }
+}
+
+function selecionarPosicao(event) {
+    let posicaoSelecionada = event.target;
+    let jogador = sessionStorage.getItem("jogadorSelecionado");
+
+    if (jogador) {
+        posicaoSelecionada.innerText = jogador;
+        posicaoSelecionada.style.backgroundColor = "blue";
+        sessionStorage.removeItem("jogadorSelecionado");
+    }
+}
+
+document.getElementById("adicionarJogador").addEventListener("click", function() {
+    let input = document.getElementById("pesquisaJogador");
+    let jogador = input.value.trim();
+
+    if (jogador !== "") {
+        sessionStorage.setItem("jogadorSelecionado", jogador);
+        input.value = "";
+        alert("Agora clique numa posição no campo para adicionar o jogador.");
+    } else {
+        alert("Digite um nome de jogador.");
+    }
 });
 
-document.getElementById("addPlayer").addEventListener("click", function () {
-    let name = document.getElementById("playerName").value.trim();
-    let positionElement = document.querySelector(".position.selected");
+function iniciarTemporizador() {
+    let tempoRestante = parseInt(sessionStorage.getItem("tempo"));
+    let displayTempo = document.getElementById("tempoRestante");
 
-    if (!name) {
-        alert("Por favor, insira um nome de jogador.");
-        return;
-    }
+    if (tempoRestante > 0) {
+        let interval = setInterval(() => {
+            tempoRestante--;
+            displayTempo.innerText = "Tempo: " + tempoRestante + "s";
 
-    if (!positionElement) {
-        alert("Por favor, selecione uma posição.");
-        return;
-    }
-
-    let position = positionElement.getAttribute("data-pos");
-
-    fetch(`checkPlayer.php?name=${encodeURIComponent(name)}&club=${selectedClub}&position=${position}`)
-        .then(response => response.json())
-        .then(data => {
-            if (!data.exists) {
-                alert("Jogador não encontrado ou posição/clube incorretos!");
-                return;
+            if (tempoRestante <= 0) {
+                clearInterval(interval);
+                alert("O tempo acabou!");
+                window.location.href = "futebol11clubes.php";
             }
+        }, 1000);
+    }
+}
 
-            // Verifica se a posição já está ocupada
-            if (positionElement.querySelector(".player-image")) {
-                alert("Essa posição já está ocupada!");
-                return;
-            }
-
-            positionElement.innerHTML = `
-                <img src="${data.image}" class="player-image" alt="${data.name}" style="width: 50px; height: 50px; border-radius: 50%;">
-                <div class="player-name" style="font-size: 12px; margin-top: 5px;">${data.name}</div>
-            `;
-        })
-        .catch(error => console.error("Erro ao buscar jogador:", error));
+function voltarInicio() {
+    window.location.href = "futebol11clubes.php";
+}
+document.addEventListener("DOMContentLoaded", function() {
+    if (window.location.pathname.includes("jogo.php")) {
+        gerarCampo();
+        iniciarTemporizador();
+        carregarClube();
+    }
 });
+
+function carregarClube() {
+    if (clube) {
+        document.getElementById("clubeImagem").src = clube.imagem_clube;
+        document.getElementById("clubeImagem").alt = clube.nome_clube;
+        document.getElementById("clubeNome").innerText = clube.nome_clube;
+    } else {
+        console.error("Erro: Clube não encontrado.");
+    }
+}
