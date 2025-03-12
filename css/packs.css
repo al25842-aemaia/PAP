@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #1a1a1a;
+    color: white;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-top: 20px;
+}
+
+#pack-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+#pack-image {
+    width: 250px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+#pack-image:hover {
+    transform: scale(1.1);
+}
+
+.hidden {
+    opacity: 0;
+    display: none;
+}
+
+#pack-animation img, #pack-animation span {
+    display: block;
+    margin: 20px auto;
+    width: 150px;
+    height: auto;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+#jogador-img {
+    width: 200px;
+    border-radius: 10px;
+}
+
+#jogador-info {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+}

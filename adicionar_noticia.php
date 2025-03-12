@@ -1,5 +1,5 @@
 <?php session_start(); 
-    proibirNaoAdmin();
+    //proibirNaoAdmin();
     require_once 'db_connection.php';
 ?>
 <!DOCTYPE html>
