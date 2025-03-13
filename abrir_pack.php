@@ -1,49 +1,58 @@
 <?php
 include 'db_connection.php';
 
-$ligaEscolhida = $_GET['liga'] ?? '';
+$liga = isset($_GET['liga']) ? $_GET['liga'] : '';
 
-// Buscar um jogador aleatório da liga escolhida
-$query = "SELECT j.nome_jogador, j.imagem_jogador, j.numero_camisola, 
-                 n.nacionalidade, n.imagem_nacionalidade, 
-                 c.nome_clube, c.imagem_clube,
-                 GROUP_CONCAT(p.nome_posicao SEPARATOR ', ') AS posicoes
-          FROM jogador j
-          JOIN clube c ON j.id_clube = c.id_clube
-          JOIN nacionalidade n ON j.id_nacionalidade = n.id_nacionalidade
-          JOIN jogador_posicoes jp ON j.id_jogador = jp.id_jogador
-          JOIN posicoes p ON jp.id_posicao = p.id_posicao
-          WHERE c.local_clube = ?
-          GROUP BY j.id_jogador
-          ORDER BY RAND()
-          LIMIT 1";
+$sql = "SELECT j.*, c.nome_clube, c.imagem_clube, n.nacionalidade, n.imagem_nacionalidade, p.nome_posicao 
+        FROM jogador j
+        JOIN clube c ON j.id_clube = c.id_clube
+        JOIN nacionalidade n ON j.id_nacionalidade = n.id_nacionalidade
+        JOIN jogador_posicoes jp ON j.id_jogador = jp.id_jogador
+        JOIN posicoes p ON jp.id_posicao = p.id_posicao
+        WHERE c.local_clube = '$liga' 
+        ORDER BY RAND() LIMIT 1";
 
-$stmt = $conn->prepare($query);
-$stmt->bind_param("s", $ligaEscolhida);
-$stmt->execute();
-$result = $stmt->get_result();
-$jogador = $result->fetch_assoc();
+$result = $conn->query($sql);
+$player = $result->fetch_assoc();
 
-if (!$jogador) {
-    die("Nenhum jogador encontrado para esta liga: " . htmlspecialchars($ligaEscolhida));
-}
+$conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abrindo Pack</title>
+    <title>Abrir Pack</title>
     <link rel="stylesheet" href="css/packs.css">
-    <script src="js/packs.js" defer></script>
 </head>
 <body>
-    <h1 id="pack-status">Clique para Abrir o Pack</h1>
-    
-    <div id="pack-container">
-        <img id="pack-image" src="imagens/pack.png" alt="Pack Fechado" onclick="abrirPack()">
+
+<div id="animation-container">
+    <p id="pack-status">Pack a abrir...</p>
+
+    <div class="animation-stage hidden" id="stage-1">
+        <img src="<?php echo $player['imagem_nacionalidade']; ?>" alt="Nacionalidade">
     </div>
 
-    <div id="pack-animation" class="hidden">
-        <img id="nacionalidade-img" src="<?= htmlspecialchars($jogador['imagem_nacionalidade']) ?>" class="hidden">
-        <span id="posicao-text" class
+    <div class="animation-stage hidden" id="stage-2">
+        <p><?php echo $player['nome_posicao']; ?></p>
+    </div>
+
+    <div class="animation-stage hidden" id="stage-3">
+        <img src="<?php echo $player['imagem_clube']; ?>" alt="Clube">
+    </div>
+
+    <div id="final-card" class="hidden">
+        <img src="<?php echo $player['imagem_jogador']; ?>" alt="Jogador">
+        <p><strong>Nome:</strong> <?php echo $player['nome_jogador']; ?></p>
+        <p><strong>Clube:</strong> <?php echo $player['nome_clube']; ?></p>
+        <p><strong>Posição:</strong> <?php echo $player['nome_posicao']; ?></p>
+        <p><strong>Número:</strong> <?php echo $player['numero_camisola']; ?></p>
+        <p><strong>Nacionalidade:</strong> <?php echo $player['nacionalidade']; ?></p>
+    </div>
+</div>
+
+<script src="js/packs.js"></script>
+</body>
+</html>

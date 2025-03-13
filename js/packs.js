@@ -1,42 +1,36 @@
-function abrirPack() {
-    const packImage = document.getElementById("pack-image");
-    const packStatus = document.getElementById("pack-status");
-    const packAnimation = document.getElementById("pack-animation");
-    const nacionalidadeImg = document.getElementById("nacionalidade-img");
-    const posicaoText = document.getElementById("posicao-text");
-    const clubeImg = document.getElementById("clube-img");
-    const jogadorImg = document.getElementById("jogador-img");
-    const jogadorInfo = document.getElementById("jogador-info");
+document.addEventListener("DOMContentLoaded", function () {
+    const stage1 = document.getElementById("stage-1");
+    const stage2 = document.getElementById("stage-2");
+    const stage3 = document.getElementById("stage-3");
+    const finalCard = document.getElementById("final-card");
 
-    // Esconder a imagem do pack ao clicar
-    packImage.style.display = "none";
-    packStatus.innerText = "Abrindo o Pack...";
-    
-    // Mostrar a animação gradualmente
-    packAnimation.classList.remove("hidden");
+    function startAnimation() {
+        setTimeout(() => {
+            stage1.classList.remove("hidden");
+            stage1.classList.add("fade-in");
 
-    setTimeout(() => {
-        nacionalidadeImg.style.opacity = "1";
-        nacionalidadeImg.classList.remove("hidden");
-    }, 1000);
+            setTimeout(() => {
+                stage1.classList.add("hidden");
 
-    setTimeout(() => {
-        posicaoText.style.opacity = "1";
-        posicaoText.classList.remove("hidden");
-    }, 2000);
+                stage2.classList.remove("hidden");
+                stage2.classList.add("fade-in");
 
-    setTimeout(() => {
-        clubeImg.style.opacity = "1";
-        clubeImg.classList.remove("hidden");
-    }, 3000);
+                setTimeout(() => {
+                    stage2.classList.add("hidden");
 
-    setTimeout(() => {
-        jogadorImg.style.opacity = "1";
-        jogadorImg.classList.remove("hidden");
-    }, 4000);
+                    stage3.classList.remove("hidden");
+                    stage3.classList.add("fade-in");
 
-    setTimeout(() => {
-        packStatus.innerText = "Pack Aberto!";
-        jogadorInfo.classList.remove("hidden");
-    }, 5000);
-}
+                    setTimeout(() => {
+                        stage3.classList.add("hidden");
+
+                        finalCard.classList.remove("hidden");
+                        finalCard.classList.add("fade-in");
+                    }, 2000);
+                }, 2000);
+            }, 2000);
+        }, 1000);
+    }
+
+    startAnimation();
+});
