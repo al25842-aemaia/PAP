@@ -17,7 +17,7 @@
         <div class="hero-content">
             <h1>Bem-vindo ao Futebol 12!</h1>
             <p>Explora, O nosso melhor minijogo.</p>
-            <a href="futebol11clubes.php" class="cta-button">Começar</a>
+            <a href="adivinharjogador.php" class="cta-button">Começar</a>
         </div>
     </section>
 
