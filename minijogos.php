@@ -23,7 +23,7 @@
 
         <!-- Exemplo do segundo minijogo -->
         <div class="game-item" onclick="navigateTo('packs.php')">
-            <img src="imagens/futebol11clubes.jpg" alt="packs"> <!-- Imagem do minijogo 2 -->
+            <img src="imagens/packs.jpg" alt="packs"> <!-- Imagem do minijogo 2 -->
             <button>Play</button>
         </div>
 
