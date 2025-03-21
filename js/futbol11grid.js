@@ -12,7 +12,7 @@ function checkPlayer() {
         cells.forEach(cell => {
             if (cell.dataset.clube == found.id_clube && cell.dataset.nacionalidade == found.id_nacionalidade) {
                 if (!cell.innerHTML) {  // Só insere se a célula estiver vazia
-                    cell.innerHTML = `<img src="imagens_jogador/${found.imagem_jogador}" alt="${found.nome_jogador}">`;
+                    cell.innerHTML = `<img src="${found.imagem_jogador}" alt="${found.nome_jogador}">`;
                 } else {
                     alert("Essa célula já tem um jogador!");
                 }

@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <?php
 include 'db_connection.php';
 
@@ -62,13 +63,13 @@ $conn->close();
             <div class="corner"></div>
             <?php foreach ($nacionalidades as $nac): ?>
                 <div class="nacionalidade">
-                    <img src="imagens_nacionalidade/<?php echo $nac['imagem_nacionalidade']; ?>" alt="<?php echo $nac['nacionalidade']; ?>">
+                    <img src="<?php echo $nac['imagem_nacionalidade']; ?>" alt="<?php echo $nac['nacionalidade']; ?>">
                 </div>
             <?php endforeach; ?>
             
             <?php foreach ($clubes as $clube): ?>
                 <div class="clube">
-                    <img src="imagens_clube/<?php echo $clube['imagem_clube']; ?>" alt="<?php echo $clube['nome_clube']; ?>">
+                    <img src="<?php echo $clube['imagem_clube']; ?>" alt="<?php echo $clube['nome_clube']; ?>">
                 </div>
                 <?php foreach ($nacionalidades as $nac): ?>
                     <div class="cell" data-clube="<?php echo $clube['id_clube']; ?>" data-nacionalidade="<?php echo $nac['id_nacionalidade']; ?>"></div>
