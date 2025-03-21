@@ -1,28 +1,26 @@
-cells.forEach(cell => {
-    const jogadoresData = cell.getAttribute('data-jogadores');
-    if (!jogadoresData || jogadoresData.trim() === "") return; // Verifica se há dados de jogadores
+function checkPlayer() {
+    let playerName = document.getElementById("playerInput").value.trim();
+    if (playerName === "") {
+        alert("Digite o nome do jogador.");
+        return;
+    }
 
-    const jogadores = jogadoresData.split(',');
-    jogadores.forEach(jogador => {
-        const [nome, imagem] = jogador.split("|").map(str => str.trim()); // Remove espaços extras
+    let found = jogadores.find(jogador => jogador.nome_jogador.toLowerCase() === playerName.toLowerCase());
 
-        if (nome.toLowerCase() === playerName.toLowerCase()) {
-            if (!cell.classList.contains('correct')) { // Evita sobrescrita se já estiver preenchido
-                const imgSrc = imagem === 'fallback-image.png' 
-                    ? 'path/to/fallback-image.png' 
-                    : `data:image/png;base64,${imagem}`;
-                
-                cell.innerHTML = `
-                    <img src="${imgSrc}" alt="${nome}" style="width: 50px; height: auto;">
-                    <p>${nome}</p>
-                `;
-                cell.classList.add('correct');
+    if (found) {
+        let cells = document.querySelectorAll(".cell");
+        cells.forEach(cell => {
+            if (cell.dataset.clube == found.id_clube && cell.dataset.nacionalidade == found.id_nacionalidade) {
+                if (!cell.innerHTML) {  // Só insere se a célula estiver vazia
+                    cell.innerHTML = `<img src="imagens_jogador/${found.imagem_jogador}" alt="${found.nome_jogador}">`;
+                } else {
+                    alert("Essa célula já tem um jogador!");
+                }
             }
-        }
-    });
-});
+        });
+    } else {
+        alert("Jogador não encontrado ou incorreto!");
+    }
 
-// Limpa o campo de entrada fora do loop
-if (playerInput) {
-    playerInput.value = "";
+    document.getElementById("playerInput").value = "";
 }
