@@ -5,6 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abrir Pack</title>
     <link rel="stylesheet" href="css/packs.css">
+    <style>
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .buttons-container button {
+            background-color: #ffcc00;
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .buttons-container button:hover {
+            background-color: #ffaa00;
+            transform: scale(1.1);
+        }
+    </style>
 </head>
 <body>
     <?php
@@ -49,6 +74,12 @@
             <p><strong>Posição:</strong> <?php echo $player['nome_posicao']; ?></p>
             <p><strong>Número:</strong> <?php echo $player['numero_camisola']; ?></p>
             <p><strong>Nacionalidade:</strong> <?php echo $player['nacionalidade']; ?></p>
+
+            <!-- Botões abaixo do cartão -->
+            <div class="buttons-container">
+                <button onclick="window.location.reload();">🔄 Abrir outro pack</button>
+                <button onclick="window.location.href='packs.php';">🏠 Voltar</button>
+            </div>
         </div>
     </div>
 
