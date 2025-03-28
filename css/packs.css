@@ -25,55 +25,98 @@ body {
 
 .pack-header {
     background: linear-gradient(135deg, rgba(44,62,80,0.9) 0%, rgba(231,76,60,0.8) 100%);
-    padding: 40px 20px;
+    padding: 60px 20px;
     text-align: center;
     clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
-    margin-bottom: 30px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.pack-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.05"><path fill="%23ffffff" d="M30,10 Q50,5 70,10 Q95,15 90,40 Q85,65 70,80 Q50,95 30,80 Q15,65 10,40 Q5,15 30,10"/></svg>');
+    background-size: 100px 100px;
 }
 
 .pack-header h1 {
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: 800;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     text-transform: uppercase;
     color: var(--gold-color);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    position: relative;
 }
 
 .pack-header .subtitle {
-    font-size: 1rem;
+    font-size: 1.2rem;
     opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .packs-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    max-width: 900px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
 .pack-card {
     background: var(--card-bg);
-    border-radius: 10px;
+    border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    transition: transform 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     border: 1px solid rgba(255,255,255,0.1);
+    position: relative;
+}
+
+.pack-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 204, 0, 0.1) 0%,
+        transparent 50%,
+        rgba(231, 76, 60, 0.1) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.pack-card:hover::before {
+    opacity: 1;
 }
 
 .pack-image-container {
     position: relative;
-    height: 150px; /* Reduzido de 200px */
+    height: 200px;
     overflow: hidden;
 }
 
 .pack-image {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Alterado de 'cover' para 'contain' */
-    padding: 15px; /* Adicionado espaçamento */
-    transition: transform 0.3s ease;
+    object-fit: contain;
+    padding: 20px;
+    transition: transform 0.5s ease;
+}
+
+.pack-card:hover .pack-image {
+    transform: scale(1.1);
 }
 
 .pack-overlay {
@@ -82,16 +125,18 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.5) 100%);
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
+    transition: all 0.3s ease;
 }
 
 .pack-info {
-    padding: 15px;
+    padding: 20px;
+    position: relative;
 }
 
 .pack-info h2 {
-    font-size: 1.3rem;
-    margin-bottom: 8px;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
     color: var(--gold-color);
 }
 
@@ -99,12 +144,12 @@ body {
     display: flex;
     align-items: center;
     color: var(--text-secondary);
-    margin-bottom: 15px;
-    font-size: 0.8rem;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
 }
 
 .pack-date i {
-    margin-right: 5px;
+    margin-right: 8px;
     color: var(--gold-color);
 }
 
@@ -113,20 +158,43 @@ body {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 8px 15px;
+    padding: 12px 20px;
     background: linear-gradient(135deg, var(--accent-color), #c0392b);
     color: white;
     border: none;
-    border-radius: 5px;
-    font-size: 0.9rem;
+    border-radius: 8px;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.pack-button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        transparent 45%,
+        rgba(255, 255, 255, 0.2) 50%,
+        transparent 55%
+    );
+    transform: rotate(45deg);
+    transition: all 0.5s ease;
 }
 
 .pack-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 3px 10px rgba(231, 76, 60, 0.4);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(231, 76, 60, 0.5);
+}
+
+.pack-button:hover::before {
+    left: 100%;
 }
 
 .pack-button i {
@@ -134,20 +202,32 @@ body {
 }
 
 .pack-button:hover i {
-    transform: translateX(3px);
+    transform: translateX(5px);
 }
 
 .pack-footer {
     text-align: center;
-    padding: 30px 20px;
-    margin-top: 50px;
-    font-size: 0.8rem;
+    padding: 40px 20px;
+    margin-top: 80px;
+    font-size: 0.9rem;
     color: var(--text-secondary);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Efeitos especiais para packs premium */
+.pack-card.highlight {
+    border: 2px solid var(--gold-color);
+    box-shadow: 0 0 30px rgba(255, 204, 0, 0.3);
+}
+
+.pack-card.highlight .pack-button {
+    background: linear-gradient(135deg, var(--gold-color), #e6b800);
+    color: #000;
 }
 
 @media (max-width: 768px) {
     .pack-header {
-        padding: 30px 20px;
+        padding: 40px 20px;
     }
     
     .pack-header h1 {
@@ -156,10 +236,10 @@ body {
     
     .packs-container {
         grid-template-columns: 1fr;
-        max-width: 400px;
+        max-width: 500px;
     }
     
     .pack-image-container {
-        height: 120px;
+        height: 180px;
     }
 }
