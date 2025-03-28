@@ -64,9 +64,6 @@
             <h2>Sobre o Futebol 12</h2>
             <p>Somos a plataforma definitiva para fãs de futebol, oferecendo notícias atualizadas em tempo real e uma variedade de minijogos emocionantes para você se divertir a qualquer momento.</p>
             <div class="stats">
-        <div class="about-image">
-            <img src="imagens/futebol-about.jpg" alt="Sobre o Futebol 12">
-        </div>
     </section>
 
     <!-- Newsletter -->
