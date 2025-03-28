@@ -7,13 +7,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $numero_camisola = $_POST['numero_camisola'];
     $imagem_jogador = $_POST['imagem_jogador'];
     $posicoes = $_POST['posicoes']; // Array de IDs das posições
+    $overall = $_POST['overall'];
+    $potencial = $_POST['potencial'];
+    $salario = $_POST['salario'];
+    $valor = $_POST['valor'];
 
     // Insere o jogador na tabela Jogador
-    $stmt = $pdo->prepare("INSERT INTO Jogador (nome, aposentado, numero_camisola, imagem) VALUES (:nome, :aposentado, :numero_camisola, :imagem)");
+    $stmt = $pdo->prepare("INSERT INTO Jogador (nome, aposentado, numero_camisola, imagem, overall, potencial, salario, valor) 
+                          VALUES (:nome, :aposentado, :numero_camisola, :imagem, :overall, :potencial, :salario, :valor)");
     $stmt->bindParam(':nome', $nome_jogador);
     $stmt->bindParam(':aposentado', $aposentado);
     $stmt->bindParam(':numero_camisola', $numero_camisola);
     $stmt->bindParam(':imagem', $imagem_jogador);
+    $stmt->bindParam(':overall', $overall);
+    $stmt->bindParam(':potencial', $potencial);
+    $stmt->bindParam(':salario', $salario);
+    $stmt->bindParam(':valor', $valor);
     $stmt->execute();
 
     // Recupera o ID do jogador recém-inserido

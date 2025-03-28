@@ -11,6 +11,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_clube = $_POST['id_clube'];
     $id_nacionalidade = $_POST['id_nacionalidade'];
     $posicoes = $_POST['posicoes']; // Este campo será um array.
+    $overall = $_POST['overall'];
+    $potencial = $_POST['potencial'];
+    $salario = $_POST['salario'];
+    $valor = $_POST['valor'];
 
     // Lógica de upload de imagem
     $target_dir = "imagens_jogador/";
@@ -36,9 +40,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "The file " . htmlspecialchars(basename($_FILES["fileToUpload"]["name"])) . " has been uploaded.";
             
             // Inserindo o jogador na tabela jogador
-            $sql = "INSERT INTO jogador (nome_jogador, aposentado, numero_camisola, imagem_jogador, id_clube, id_nacionalidade) VALUES (?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO jogador (nome_jogador, aposentado, numero_camisola, imagem_jogador, id_clube, id_nacionalidade, overall, potencial, salario, valor) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $pdo->prepare($sql);
-            $stmt->execute([$nome_jogador, $aposentado, $numero_camisola, $target_file, $id_clube, $id_nacionalidade]);
+            $stmt->execute([$nome_jogador, $aposentado, $numero_camisola, $target_file, $id_clube, $id_nacionalidade, $overall, $potencial, $salario, $valor]);
 
             // Obtendo o ID do jogador recém-inserido
             $id_jogador = $pdo->lastInsertId();
@@ -86,6 +91,18 @@ $posicoes = $pdo->query("SELECT id_posicao, nome_posicao FROM posicoes")->fetchA
 
         <label for="numero_camisola">Número da Camisola:</label>
         <input type="number" id="numero_camisola" name="numero_camisola" min="1" max="99" required><br>
+
+        <label for="overall">Overall:</label>
+        <input type="number" id="overall" name="overall" min="1" max="99" required><br>
+
+        <label for="potencial">Potencial:</label>
+        <input type="number" id="potencial" name="potencial" min="1" max="99" required><br>
+
+        <label for="salario">Salário (€):</label>
+        <input type="number" id="salario" name="salario" min="0" step="1000" required><br>
+
+        <label for="valor">Valor de Mercado (€):</label>
+        <input type="number" id="valor" name="valor" min="0" step="1000" required><br>
 
         <label for="fileToUpload">Imagem do Jogador:</label>
         <input type="file" id="fileToUpload" name="fileToUpload" accept="image/*" required><br>
