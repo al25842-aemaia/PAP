@@ -80,6 +80,27 @@
                 </button>
             </div>
         </div>
+
+        <!-- Modal de Game Over -->
+        <div class="game-over-modal" id="game-over-modal">
+            <div class="modal-content">
+                <h3><i class="fas fa-times-circle"></i> TU PERDESTE!</h3>
+                <p>Você esgotou todas as suas tentativas.</p>
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <span class="stat-label">Sequência Atual</span>
+                        <span class="stat-value" id="final-sequence">0</span>
+                    </div>
+                    <div class="stat-item highlight">
+                        <span class="stat-label">Melhor Sequência</span>
+                        <span class="stat-value" id="final-best">0</span>
+                    </div>
+                </div>
+                <button class="try-again-btn" onclick="reiniciarJogo()">
+                    <i class="fas fa-redo"></i> TENTAR DE NOVO
+                </button>
+            </div>
+        </div>
     </main>
 
     <?php include 'footer.php'; ?>
