@@ -1,44 +1,59 @@
-    <?php
-    include 'db_connection.php';
+<?php
+include 'db_connection.php';
 
-    // Buscar todas as ligas disponíveis no banco de dados
-    $query = "SELECT DISTINCT local_clube FROM clube";
-    $result = mysqli_query($conn, $query);
+$query = "SELECT DISTINCT local_clube FROM clube";
+$result = mysqli_query($conn, $query);
 
-    // Definir manualmente as imagens para cada liga
-    $imagens_packs = [
-        'Liga Portugal' => 'imagens/ligaPortugal.png',
-        'La Liga' => 'imagens/laliga.png',
-        //'Premier League' => 'imagens/premier_league.jpeg',
-        //'Bundesliga' => 'imagens/bundesliga.jpeg',
-        //'Serie A' => 'imagens/serie_a.jpeg'
-    ];
-    ?>
-    <!DOCTYPE html>
-    <html lang="pt">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Packs</title>
-        <link rel="stylesheet" href="css/packs.css">
-    </head>
-    <body>
-        <h1>Escolha um Pack</h1>
-        <div class="packs-container">
-            <?php while ($row = mysqli_fetch_assoc($result)): 
-                $liga = $row['local_clube'];
-                // Se a liga tiver uma imagem definida, usa-a. Caso contrário, usa uma imagem padrão.
-                $imagemPack = isset($imagens_packs[$liga]) ? $imagens_packs[$liga] : 'imagens/default_pack.jpeg';
-            ?>
-                <div class="pack">
-                    <img src="<?php echo $imagemPack; ?>" alt="<?php echo $liga; ?>">
+$imagens_packs = [
+    'Liga Portugal' => 'imagens/ligaPortugal.png',
+    'La Liga' => 'imagens/laliga.png',
+];
+?>
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escolha Seu Pack - Futebol 12</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/packs.css">
+</head>
+<body>
+    <div class="pack-header">
+        <div class="pack-header-content">
+            <h1><span>ESCOLHA SEU PACK</span></h1>
+            <p class="subtitle">Selecione uma liga para revelar jogadores incríveis</p>
+        </div>
+    </div>
+
+    <div class="packs-container">
+        <?php while ($row = mysqli_fetch_assoc($result)): 
+            $liga = $row['local_clube'];
+            $imagemPack = isset($imagens_packs[$liga]) ? $imagens_packs[$liga] : 'imagens/default_pack.jpeg';
+        ?>
+            <div class="pack-card">
+                <div class="pack-image-container">
+                    <img src="<?php echo $imagemPack; ?>" alt="<?php echo $liga; ?>" class="pack-image">
+                    <div class="pack-overlay"></div>
+                </div>
+                <div class="pack-info">
                     <h2><?php echo $liga; ?></h2>
+                    <div class="pack-date">
+                        <i class="far fa-calendar-alt"></i> <?php echo date('d/m/Y'); ?>
+                    </div>
                     <form action="abrir_pack.php" method="GET">
                         <input type="hidden" name="liga" value="<?php echo $liga; ?>">
-                        <button type="submit">Abrir Pack</button>
+                        <button type="submit" class="pack-button">
+                            <span>ABRIR PACK</span>
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
                     </form>
                 </div>
-            <?php endwhile; ?>
-        </div>
-    </body>
-    </html>
+            </div>
+        <?php endwhile; ?>
+    </div>
+
+    <div class="pack-footer">
+    </div>
+</body>
+</html>

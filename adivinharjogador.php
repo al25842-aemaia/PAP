@@ -4,44 +4,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adivinhar Jogador</title>
-    <link rel="stylesheet" href="css/menu.css"> <!-- CSS do menu -->
-    <link rel="stylesheet" href="css/footer.css"> <!-- CSS do footer -->
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/adivinharjogador.css"> <!-- CSS específico da página -->
-    </head>
+    <title>Potência 12 Gênio - Adivinhar Jogador</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/adivinharjogador.css">
+</head>
 <body>
+    <?php include 'menu.php'; ?>
 
-<?php include 'menu.php'; ?>
-
-<div class="container">
-    <h1>Adivinhar o Jogador</h1>
-    
-    <div class="jogador-container">
-        <div id="jogador" class="jogador-imagem"></div>
-        <div id="dicas-container">
-            <h3>Dicas</h3>
-            <div id="dicas"></div>
+    <section class="guess-hero">
+        <div class="hero-content">
+            <h1>POTÊNCIA 12 GÊNIO</h1>
+            <p>Desafie seu conhecimento futebolístico</p>
         </div>
-    </div>
+    </section>
 
-    <input type="text" id="nome_jogador" placeholder="Digite o nome do jogador">
-    <button onclick="adivinhar()"><i class="fa fa-search"></i> Adivinhar!</button>
-    
-    <div id="vidas" class="vidas">
-        <img src="imagens/bola.png" alt="Vida" class="vida-icone">
-        <img src="imagens/bola.png" alt="Vida" class="vida-icone">
-        <img src="imagens/bola.png" alt="Vida" class="vida-icone">
-        <img src="imagens/bola.png" alt="Vida" class="vida-icone">
-        <img src="imagens/bola.png" alt="Vida" class="vida-icone">
-        <img src="imagens/bola.png" alt="Vida" class="vida-icone">
-    </div>
-    
-    <p>Sequência atual: <span id="sequencia_atual">0</span> | Melhor sequência: <span id="melhor_sequencia">0</span></p>
-</div>
+    <main class="game-container">
+        <div class="game-stats">
+            <div class="stat-box">
+                <span class="stat-label">Sequência Atual</span>
+                <span class="stat-value" id="sequencia_atual">0</span>
+            </div>
+            <div class="stat-box highlight">
+                <span class="stat-label">Melhor Sequência</span>
+                <span class="stat-value" id="melhor_sequencia">0</span>
+            </div>
+            <div class="stat-box lives-box">
+                <span class="stat-label">Tentativas</span>
+                <div class="lives" id="vidas">
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-heart"></i>
+                </div>
+            </div>
+        </div>
 
-<?php include 'footer.php'; ?>
+        <div class="game-content">
+            <div class="player-card">
+                <div class="player-image" id="jogador">
+                    <div class="silhouette-overlay"></div>
+                    <div class="reveal-progress"></div>
+                </div>
+            </div>
+            
+            <div class="hints-card">
+                <h3><i class="fas fa-lightbulb"></i> DICAS</h3>
+                <div class="hints-list" id="dicas"></div>
+            </div>
+        </div>
 
-<script src="js/adivinharjogador.js"></script>
+        <div class="guess-form">
+            <input type="text" id="nome_jogador" placeholder="Digite o nome do jogador..." autocomplete="off">
+            <button class="guess-btn" onclick="adivinhar()">
+                <i class="fas fa-search"></i> ADIVINHAR
+            </button>
+        </div>
+
+        <div class="result-modal" id="result-modal">
+            <div class="modal-content">
+                <h3 id="result-title"></h3>
+                <p id="result-message"></p>
+                <div class="player-revealed">
+                    <img id="revealed-image" src="" alt="Jogador Revelado">
+                    <div class="player-info">
+                        <h4 id="revealed-name"></h4>
+                        <p id="revealed-details"></p>
+                    </div>
+                </div>
+                <button class="next-btn" onclick="nextPlayer()">
+                    <i class="fas fa-forward"></i> PRÓXIMO JOGADOR
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <?php include 'footer.php'; ?>
+
+    <script src="js/adivinharjogador.js"></script>
 </body>
 </html>

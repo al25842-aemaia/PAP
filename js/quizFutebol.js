@@ -1,46 +1,106 @@
-document.addEventListener("DOMContentLoaded", function () {
-    let botoes = document.querySelectorAll(".opcao");
-    let respostasSelecionadas = new Array(10).fill(null);
+document.addEventListener('DOMContentLoaded', function() {
+    const questionCards = document.querySelectorAll('.question-card');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const submitBtn = document.querySelector('.submit-btn');
+    const progressText = document.querySelector('.progress-text');
+    const resultContainer = document.querySelector('.result-container');
+    const scoreElement = document.getElementById('score');
+    const restartBtn = document.querySelector('.restart-btn');
+    
+    let currentQuestion = 0;
+    let userAnswers = Array(questionCards.length).fill(null);
+    let quizSubmitted = false;
 
-    botoes.forEach(botao => {
-        botao.addEventListener("click", function () {
-            let perguntaDiv = this.closest(".pergunta");
-            let index = [...document.querySelectorAll(".pergunta")].indexOf(perguntaDiv);
-            respostasSelecionadas[index] = this.innerText;
+    showQuestion(currentQuestion);
 
-            perguntaDiv.querySelectorAll(".opcao").forEach(b => b.classList.remove("selecionada"));
-            this.classList.add("selecionada");
+    // Event listeners
+    prevBtn.addEventListener('click', showPrevQuestion);
+    nextBtn.addEventListener('click', showNextQuestion);
+    submitBtn.addEventListener('click', submitQuiz);
+    restartBtn.addEventListener('click', restartQuiz);
+
+    // Selecionar opção de resposta
+    document.querySelectorAll('.option-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            if (quizSubmitted) return;
+            
+            const questionCard = this.closest('.question-card');
+            const options = questionCard.querySelectorAll('.option-btn');
+            
+            options.forEach(opt => opt.classList.remove('selected'));
+            this.classList.add('selected');
+            
+            const questionIndex = Array.from(questionCards).indexOf(questionCard);
+            userAnswers[questionIndex] = this.textContent;
         });
     });
 
-    document.getElementById("verificar").addEventListener("click", function () {
-        let perguntas = document.querySelectorAll(".pergunta");
-        let acertos = 0;
+    function showQuestion(index) {
+        questionCards.forEach(card => card.classList.remove('active'));
+        questionCards[index].classList.add('active');
+        
+        prevBtn.disabled = index === 0;
+        nextBtn.disabled = index === questionCards.length - 1;
+        progressText.textContent = `${index + 1} de ${questionCards.length}`;
 
-        perguntas.forEach((pergunta, i) => {
-            let respostaCorreta = pergunta.dataset.resposta;
-            let respostaEscolhida = respostasSelecionadas[i];
+        if (quizSubmitted) {
+            const questionCard = questionCards[index];
+            const options = questionCard.querySelectorAll('.option-btn');
+            const correctAnswer = questionCard.querySelector('[data-correct="true"]').textContent;
+            const userAnswer = userAnswers[index];
 
-            pergunta.querySelectorAll(".opcao").forEach(botao => {
-                if (botao.innerText === respostaCorreta) {
-                    botao.classList.add("correta");
-                } else if (botao.innerText === respostaEscolhida) {
-                    botao.classList.add("errada");
+            options.forEach(opt => {
+                opt.classList.remove('correct', 'incorrect', 'selected');
+                
+                if (opt.textContent === correctAnswer) {
+                    opt.classList.add('correct'); // Resposta correta sempre verde
                 }
-                botao.disabled = true;
+                
+                if (opt.textContent === userAnswer) {
+                    if (userAnswer === correctAnswer) {
+                        opt.classList.add('correct'); // Acerto do usuário
+                    } else {
+                        opt.classList.add('incorrect'); // Erro do usuário
+                    }
+                }
             });
+        }
+    }
 
-            if (respostaEscolhida === respostaCorreta) {
-                acertos++;
-            }
-        });
+    function showPrevQuestion() {
+        if (currentQuestion > 0) {
+            currentQuestion--;
+            showQuestion(currentQuestion);
+        }
+    }
 
-        document.getElementById("resultado").innerText = `Você acertou ${acertos} de 10 perguntas!`;
-        document.getElementById("verificar").style.display = "none";
-        document.getElementById("jogar-novamente").style.display = "block";
-    });
+    function showNextQuestion() {
+        if (currentQuestion < questionCards.length - 1) {
+            currentQuestion++;
+            showQuestion(currentQuestion);
+        }
+    }
 
-    document.getElementById("jogar-novamente").addEventListener("click", function () {
+    function submitQuiz() {
+        if (quizSubmitted) return;
+        
+        quizSubmitted = true;
+        submitBtn.textContent = 'Quiz Concluído';
+        submitBtn.style.backgroundColor = '#6c757d';
+        
+        let score = userAnswers.reduce((acc, answer, index) => {
+            const correctAnswer = questionCards[index].querySelector('[data-correct="true"]').textContent;
+            return acc + (answer === correctAnswer ? 1 : 0);
+        }, 0);
+        
+        scoreElement.textContent = score;
+        resultContainer.classList.remove('hidden');
+        showQuestion(currentQuestion);
+        resultContainer.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function restartQuiz() {
         location.reload();
-    });
+    }
 });

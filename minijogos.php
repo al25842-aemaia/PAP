@@ -4,45 +4,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minijogos Futebol11</title>
-    <link rel="stylesheet" href="css/menu.css"> <!-- CSS do menu -->
-    <link rel="stylesheet" href="css/footer.css"> <!-- CSS do footer -->
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/minijogos.css"> <!-- CSS específico para os minijogos -->
+    <title>Minijogos - Futebol12</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/minijogos.css">
 </head>
 <body>
-    <?php include 'menu.php'; ?> <!-- Inclusão do menu comum a todas as páginas -->
-    
-    <h1>Selecione o minijogo que deseja jogar:</h1>
-    <div class="game-grid">
-        <!-- Exemplo do primeiro minijogo -->
-        <div class="game-item" onclick="navigateTo('adivinharjogador.php')">
-            <img src="imagens/adivinharjogador.jpg" alt="divinharjogador"> <!-- Imagem do minijogo 1 -->
-            <button>Play</button>
+    <?php include 'menu.php'; ?>
+
+    <section class="games-hero">
+        <div class="hero-content">
+            <h1>MINIJOGOS DE FUTEBOL</h1>
+            <p>Escolha seu desafio e mostre seu conhecimento futebolístico</p>
         </div>
+    </section>
 
-        <!-- Exemplo do segundo minijogo -->
-        <div class="game-item" onclick="navigateTo('packs.php')">
-            <img src="imagens/packs.jpg" alt="packs"> <!-- Imagem do minijogo 2 -->
-            <button>Play</button>
+    <main class="games-container">
+        <div class="games-grid">
+            <!-- Minijogo 1 -->
+            <div class="game-card" onclick="navigateTo('adivinharjogador.php')">
+                <div class="game-image">
+                    <img src="imagens/adivinharjogador.jpg" alt="Adivinhar Jogador">
+                    <div class="game-overlay"></div>
+                </div>
+                <div class="game-info">
+                    <h3>ADIVINHAR JOGADOR</h3>
+                    <p>Adivinhe o jogador com base nas dicas</p>
+                    <button class="play-button">
+                        <i class="fas fa-play"></i> JOGAR
+                    </button>
+                </div>
+            </div>
+
+            <!-- Minijogo 2 -->
+            <div class="game-card" onclick="navigateTo('packs.php')">
+                <div class="game-image">
+                    <img src="imagens/packs.jpg" alt="Packs de Jogadores">
+                    <div class="game-overlay"></div>
+                </div>
+                <div class="game-info">
+                    <h3>ESCOLHA UM PACK</h3>
+                    <p>Abra packs e descubra jogadores incríveis</p>
+                    <button class="play-button">
+                        <i class="fas fa-play"></i> JOGAR
+                    </button>
+                </div>
+            </div>
+
+            <!-- Minijogo 3 -->
+            <div class="game-card" onclick="navigateTo('futbol11grid.php')">
+                <div class="game-image">
+                    <img src="imagens/futbol12grid.png" alt="Futebol 12 Grid">
+                    <div class="game-overlay"></div>
+                </div>
+                <div class="game-info">
+                    <h3>FUTBOL12 GRID</h3>
+                    <p>Complete o grid com os jogadores corretos</p>
+                    <button class="play-button">
+                        <i class="fas fa-play"></i> JOGAR
+                    </button>
+                </div>
+            </div>
+
+            <!-- Minijogo 4 -->
+            <div class="game-card" onclick="navigateTo('quizFutebol.php')">
+                <div class="game-image">
+                    <img src="imagens/quizfutebol.jpg" alt="Quiz de Futebol">
+                    <div class="game-overlay"></div>
+                </div>
+                <div class="game-info">
+                    <h3>QUIZ FUTEBOLÍSTICO</h3>
+                    <p>Teste seu conhecimento sobre futebol</p>
+                    <button class="play-button">
+                        <i class="fas fa-play"></i> JOGAR
+                    </button>
+                </div>
+            </div>
         </div>
+    </main>
 
-        <!-- Exemplo do terceiro minijogo -->
-        <div class="game-item" onclick="navigateTo('futbol11grid.php')">
-            <img src="imagens/futbol12grid.png" alt="futebol12grid"> <!-- Imagem do minijogo 3 -->
-            <button>Play</button>
-        </div>
-        <!-- Exemplo do quarto minijogo -->
-        <div class="game-item" onclick="navigateTo('quizFutebol.php')">
-            <img src="imagens/quizfutebol.jpg" alt="quizfutebol"> <!-- Imagem do minijogo 4 -->
-            <button>Play</button>
-        </div>
+    <?php include 'footer.php'; ?>
 
-        <!-- Continue adicionando mais minijogos seguindo o mesmo formato -->
-    </div>
-
-    <?php include 'footer.php'; ?> <!-- Inclusão do footer comum a todas as páginas -->
-
-    <script src="js/minijogos.js"></script> <!-- JavaScript específico para os minijogos -->
+    <script>
+        function navigateTo(url) {
+            window.location.href = url;
+        }
+    </script>
 </body>
 </html>

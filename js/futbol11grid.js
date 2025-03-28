@@ -1,26 +1,71 @@
-function checkPlayer() {
-    let playerName = document.getElementById("playerInput").value.trim();
-    if (playerName === "") {
-        alert("Digite o nome do jogador.");
+document.addEventListener('DOMContentLoaded', function() {
+    // Verifica se o grid foi renderizado
+    const grid = document.querySelector('.grid');
+    if (!grid) {
+        console.error('Grid não encontrado');
         return;
     }
 
-    let found = jogadores.find(jogador => jogador.nome_jogador.toLowerCase() === playerName.toLowerCase());
+    // Configura o botão de verificação
+    const verifyBtn = document.getElementById('verifyBtn');
+    const playerInput = document.getElementById('playerInput');
 
-    if (found) {
-        let cells = document.querySelectorAll(".cell");
-        cells.forEach(cell => {
-            if (cell.dataset.clube == found.id_clube && cell.dataset.nacionalidade == found.id_nacionalidade) {
-                if (!cell.innerHTML) {  // Só insere se a célula estiver vazia
-                    cell.innerHTML = `<img src="${found.imagem_jogador}" alt="${found.nome_jogador}">`;
-                } else {
-                    alert("Essa célula já tem um jogador!");
-                }
+    verifyBtn.addEventListener('click', checkPlayer);
+    playerInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') checkPlayer();
+    });
+
+    function checkPlayer() {
+        const nome = playerInput.value.trim();
+        
+        if (!nome) {
+            alert('Por favor, digite o nome de um jogador');
+            playerInput.focus();
+            return;
+        }
+
+        // Busca flexível pelo jogador
+        const jogador = window.jogadores.find(j => 
+            j.nome_jogador.toLowerCase().includes(nome.toLowerCase())
+        );
+
+        if (!jogador) {
+            alert('Jogador não encontrado!\nVerifique o nome e tente novamente.');
+            playerInput.focus();
+            return;
+        }
+
+        // Encontra células correspondentes
+        const celulas = document.querySelectorAll(`
+            .cell[data-clube="${jogador.id_clube}"][data-nacionalidade="${jogador.id_nacionalidade}"]
+        `);
+
+        if (celulas.length === 0) {
+            alert('Este jogador não corresponde a nenhuma célula no grid atual');
+            return;
+        }
+
+        // Preenche a primeira célula vazia
+        let preenchido = false;
+        celulas.forEach(celula => {
+            if (!celula.hasChildNodes()) {
+                celula.innerHTML = `
+                    <img src="${jogador.imagem_jogador}" 
+                         alt="${jogador.nome_jogador}"
+                         title="${jogador.nome_jogador}">
+                `;
+                preenchido = true;
             }
         });
-    } else {
-        alert("Jogador não encontrado ou incorreto!");
-    }
 
-    document.getElementById("playerInput").value = "";
-}
+        if (!preenchido) {
+            alert('Todas as células para este jogador já estão preenchidas!');
+        }
+
+        playerInput.value = '';
+        playerInput.focus();
+    }
+});
+
+// Fallback para JavaScript desativado
+document.documentElement.classList.add('js');

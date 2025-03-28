@@ -1,150 +1,318 @@
-/* Reset básico */
+/* Reset e Estilos Base */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
 }
 
-/* Estilo geral do corpo da página */
-main {
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background: linear-gradient(to right, #1e3c72, #2a5298);
-    color: #fff;
-    text-align: center;
-    padding: 20px;
 }
 
-/* Container principal do quiz */
-.container {
-    width: 90%;
-    max-width: 600px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    animation: fadeIn 0.8s ease-in-out;
-}
-
-/* Animação de entrada suave */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Título do quiz */
-h1 {
-    font-size: 26px;
-    font-weight: 600;
-    margin-bottom: 15px;
-}
-
-/* Perguntas */
-.pergunta {
-    background: rgba(255, 255, 255, 0.2);
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    transition: 0.3s;
-}
-
-/* Perguntas ao passar o mouse */
-.pergunta:hover {
-    transform: scale(1.02);
-}
-
-/* Botões de resposta */
-.opcao {
-    display: block;
+.quiz-app {
     width: 100%;
-    padding: 12px;
-    margin: 8px 0;
-    font-size: 16px;
-    font-weight: 500;
+    max-width: 800px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.quiz-header {
+    background: linear-gradient(135deg, #2b5876 0%, #4e4376 100%);
+    color: white;
+    padding: 30px 25px;
+    text-align: center;
+    position: relative;
+}
+
+.quiz-header .logo {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.quiz-header h1 {
+    font-size: 2rem;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.subtitle {
+    font-size: 1rem;
+    opacity: 0.9;
+    font-weight: 400;
+}
+
+.quiz-content {
+    padding: 25px;
+    position: relative;
+}
+
+.question-card {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.question-card.active {
+    display: block;
+}
+
+.question-header {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.question-number {
+    display: inline-block;
+    background: #4e4376;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.question-text {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #2b5876;
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.option-btn {
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    background: white;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #555;
     cursor: pointer;
-    border: 2px solid #ddd;  /* Contorno cinza claro */
-    border-radius: 6px;
-    background: white;  /* Opções em branco */
-    color: #333;  /* Texto escuro */
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease;
+    text-align: center;
 }
 
-/* Efeito ao passar o mouse sobre as opções */
-.opcao:hover {
-    background: #f5f5f5;
-    border-color: #bbb;
+.option-btn:hover {
+    background: #f0f0f0;
+    border-color: #d0d0d0;
+    transform: translateY(-2px);
+}
+/* Estilos para feedback visual */
+.option-btn.correct {
+    background: #4CAF50 !important;
+    color: white !important;
+    border-color: #4CAF50 !important;
+    position: relative;
 }
 
-/* Opção selecionada */
-.selecionada {
-    background: #ffcc00 !important;
-    color: black;
-    border-color: #e6b800;
+.option-btn.incorrect {
+    background: #F44336 !important;
+    color: white !important;
+    border-color: #F44336 !important;
+    position: relative;
 }
 
-/* Opção correta */
-.correta {
-    background: #28a745 !important;
-    color: white;
-    border-color: #218838;
-}
-
-/* Opção errada */
-.errada {
-    background: #dc3545 !important;
-    color: white;
-    border-color: #b52b3a;
-}
-
-/* Botões principais */
-button {
-    padding: 12px 18px;
-    font-size: 16px;
+/* Adiciona ícone de correto */
+.option-btn.correct::after {
+    content: '✓';
+    margin-left: 8px;
     font-weight: bold;
+}
+
+/* Adiciona ícone de incorreto */
+.option-btn.incorrect::after {
+    content: '✗';
+    margin-left: 8px;
+    font-weight: bold;
+}
+
+/* Mantém o hover apenas antes de submeter */
+.quiz-content:not(.quiz-submitted) .option-btn:hover {
+    background: #f0f0f0;
+    transform: translateY(-2px);
+}
+
+/* Remove interação após submeter */
+.quiz-submitted .option-btn {
+    cursor: default;
+    transform: none !important;
+}
+
+.option-btn.selected {
+    background: #4e4376;
+    color: white;
+    border-color: #4e4376;
+}
+
+.quiz-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.nav-btn {
+    padding: 12px 20px;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
+    font-weight: 600;
     cursor: pointer;
-    margin-top: 15px;
-    transition: 0.3s;
+    transition: all 0.3s ease;
+    background: #f0f0f0;
+    color: #555;
 }
 
-/* Botão "Verificar Respostas" */
-#verificar {
-    background: #28a745;
+.nav-btn:hover {
+    background: #e0e0e0;
+}
+
+.submit-btn {
+    padding: 12px 25px;
+    background: #4e4376;
     color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: auto;
 }
 
-#verificar:hover {
-    background: #218838;
-    transform: scale(1.05);
+.submit-btn:hover {
+    background: #3a3258;
+    transform: translateY(-2px);
 }
 
-/* Botão "Jogar Novamente" */
-#jogar-novamente {
-    background: #007bff;
-    color: white;
+.progress-text {
+    font-weight: 600;
+    color: #777;
+}
+
+/* Result Container */
+.result-container {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+    margin-top: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #eee;
+}
+
+.result-container.hidden {
     display: none;
 }
 
-#jogar-novamente:hover {
-    background: #0056b3;
-    transform: scale(1.05);
+.result-title {
+    color: #2b5876;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
 }
 
-/* Resultado */
-#resultado {
-    font-size: 20px;
-    font-weight: bold;
-    margin-top: 15px;
-    color: #fff;
+.result-score {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.result-score span {
+    font-weight: 700;
+    color: #4e4376;
+}
+
+/* Restart Button */
+.restart-btn {
+    padding: 12px 25px;
+    background: linear-gradient(135deg, #4e4376 0%, #2b5876 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.restart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.restart-icon {
+    font-size: 1.2rem;
+}
+
+.quiz-footer {
+    text-align: center;
+    padding: 15px;
+    background: #f8f9fa;
+    color: #777;
+    font-size: 0.9rem;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .options-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .quiz-header {
+        padding: 20px 15px;
+    }
+    
+    .question-text {
+        font-size: 1.2rem;
+    }
+    
+    .quiz-controls {
+        flex-direction: column;
+    }
+    
+    .submit-btn, .nav-btn {
+        width: 100%;
+    }
+    
+    .submit-btn {
+        margin-left: 0;
+        order: 1;
+    }
+}
+/* Estilo para o botão de submit após verificação */
+.submit-btn.verified {
+    background: #6c757d !important;
+    cursor: default !important;
+}
+
+/* Estilo para opções quando o quiz foi submetido */
+.quiz-submitted .option-btn {
+    cursor: default;
+}
+
+.quiz-submitted .option-btn:hover {
+    transform: none;
+    background: white;
 }

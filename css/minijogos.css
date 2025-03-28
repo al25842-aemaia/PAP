@@ -1,52 +1,197 @@
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --green-accent: #2ecc71;
+    --dark-bg: #121212;
+    --card-bg: #1e1e1e;
+    --text-color: #ffffff;
+    --text-light: #b3b3b3;
+}
+
+/* Estilos gerais */
 body {
-    background-color: #111;
-    color: #fff;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--text-color);
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Hero Section */
+.games-hero {
+    background: linear-gradient(135deg, rgba(44,62,80,0.9) 0%, rgba(231,76,60,0.8) 100%);
+    height: 30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    margin-bottom: 40px;
+}
+
+.games-hero h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.games-hero p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-top: 15px;
+}
+
+/* Container principal */
+.games-container {
+    max-width: 1200px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+/* Cards de jogos */
+.game-card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+}
+
+.game-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.game-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.game-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 100%);
+}
+
+.game-stats {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    padding: 0 15px;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    font-size: 0.8rem;
+}
+
+.game-stats span {
+    background: rgba(0,0,0,0.6);
+    padding: 3px 8px;
+    border-radius: 10px;
+}
+
+.game-stats i {
+    margin-right: 5px;
+}
+
+.game-info {
+    padding: 20px;
     text-align: center;
 }
 
-h1 {
-    margin-top: 20px;
+.game-info h3 {
+    font-size: 1.4rem;
+    margin: 0 0 10px;
+    color: var(--green-accent);
 }
 
-.game-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Altere o número para ajustar a quantidade de colunas */
-    gap: 20px;
-    max-width: 800px;
-    margin: 20px auto;
+.game-info p {
+    color: var(--text-light);
+    margin-bottom: 20px;
+    font-size: 0.9rem;
 }
 
-.game-item {
-    background-color: #222;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.game-item:hover {
-    transform: scale(1.05);
-}
-
-.game-item img {
+.play-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    height: auto;
-    border-radius: 8px;
-}
-
-button {
-    background-color: #f60;
+    padding: 10px;
+    background: var(--accent-color);
+    color: white;
     border: none;
-    color: #fff;
-    padding: 10px 20px;
-    margin-top: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s;
+    transition: background 0.3s ease;
 }
 
-button:hover {
-    background-color: #e55;
+.play-button i {
+    margin-right: 8px;
+}
+
+.play-button:hover {
+    background: #c0392b;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .games-hero {
+        height: 25vh;
+    }
+    
+    .games-hero h1 {
+        font-size: 2rem;
+    }
+    
+    .games-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .games-hero {
+        height: 20vh;
+        padding: 0 20px;
+    }
+    
+    .games-hero h1 {
+        font-size: 1.6rem;
+    }
+    
+    .games-hero p {
+        font-size: 1rem;
+    }
+    
+    .games-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .game-image {
+        height: 160px;
+    }
+    
+    .game-info h3 {
+        font-size: 1.2rem;
+    }
 }

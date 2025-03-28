@@ -1,200 +1,165 @@
-/* Reset geral */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --gold-color: #ffcc00;
+    --dark-bg: #121212;
+    --card-bg: #1e1e1e;
+    --text-color: #ffffff;
+    --text-secondary: #b3b3b3;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Estilos gerais */
 body {
-    font-family: "Poppins", sans-serif;
-    text-align: center;
-    background: linear-gradient(120deg, #0d0d0d, #1a1a1a);
-    color: white;
-    margin: 0;
-    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--text-color);
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    line-height: 1.6;
 }
 
-/* Título principal */
-h1 {
-    margin-top: 20px;
-    font-size: 40px;
-    font-weight: bold;
-    color: #ffcc00;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+.pack-header {
+    background: linear-gradient(135deg, rgba(44,62,80,0.9) 0%, rgba(231,76,60,0.8) 100%);
+    padding: 40px 20px;
+    text-align: center;
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    margin-bottom: 30px;
 }
 
-/* Contêiner dos packs */
-.packs-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-    padding: 30px;
-    max-width: 1400px;
-}
-
-/* Linha de packs */
-.pack-row {
-    display: flex;
-    justify-content: center;
-    gap: 25px;
-    width: 100%;
-}
-
-/* Cartões dos packs */
-.pack-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 15px;
-    border-radius: 15px;
-    text-decoration: none;
-    color: white;
-    font-size: 22px;
-    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
-    border: 4px solid transparent;
-    cursor: pointer;
-    width: 250px;
-}
-
-.pack-card img {
-    width: 220px;
-    height: auto;
-    border-radius: 10px;
+.pack-header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
     margin-bottom: 10px;
+    text-transform: uppercase;
+    color: var(--gold-color);
+}
+
+.pack-header .subtitle {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.packs-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.pack-card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.pack-image-container {
+    position: relative;
+    height: 150px; /* Reduzido de 200px */
+    overflow: hidden;
+}
+
+.pack-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Alterado de 'cover' para 'contain' */
+    padding: 15px; /* Adicionado espaçamento */
     transition: transform 0.3s ease;
 }
 
-.pack-card:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.05);
-    border-color: #ffcc00;
-    box-shadow: 0 10px 30px rgba(255, 204, 0, 0.3);
+.pack-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.5) 100%);
 }
 
-.pack-card:hover img {
-    transform: scale(1.1);
+.pack-info {
+    padding: 15px;
 }
 
-/* Contêiner da animação */
-#animation-container {
-    margin-top: 50px;
+.pack-info h2 {
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+    color: var(--gold-color);
 }
 
-/* Animações */
-.animation-stage {
-    font-size: 38px;
-    font-weight: bold;
-    opacity: 0;
-    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
-    transform: scale(0.8);
-}
-
-/* Efeito visual para os estágios da animação */
-.animation-stage img {
-    width: 260px;
-    height: auto;
-    border-radius: 15px;
-    border: 4px solid white;
-    box-shadow: 0px 10px 25px rgba(255, 255, 255, 0.3);
-}
-
-/* Esconder elementos inicialmente */
-.hidden {
-    display: none;
-}
-
-/* Efeito fade-in */
-.fade-in {
-    opacity: 1 !important;
-    transform: scale(1) !important;
-}
-
-/* Estilização do cartão final do jogador */
-#final-card {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 30px;
-    border-radius: 15px;
-    margin-top: 20px;
-    opacity: 0;
-    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
-    transform: scale(0.9);
-    max-width: 460px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    border: 5px solid #ffcc00;
-    box-shadow: 0px 15px 30px rgba(255, 204, 0, 0.3);
-}
-
-/* Aparecendo no final */
-#final-card.fade-in {
-    opacity: 1;
-    transform: scale(1);
-}
-
-/* Imagem do jogador no final */
-#final-card img {
-    width: 260px;
-    height: auto;
-    border-radius: 15px;
+.pack-date {
+    display: flex;
+    align-items: center;
+    color: var(--text-secondary);
     margin-bottom: 15px;
-    border: 5px solid white;
-    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
+    font-size: 0.8rem;
 }
 
-/* Texto do cartão final */
-#final-card p {
-    font-size: 26px;
+.pack-date i {
+    margin-right: 5px;
+    color: var(--gold-color);
+}
+
+.pack-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 8px 15px;
+    background: linear-gradient(135deg, var(--accent-color), #c0392b);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
     font-weight: 600;
-    margin: 10px 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-/* Status do pack */
-#pack-status {
-    font-size: 28px;
-    font-weight: bold;
-    color: #ffcc00;
-    margin-bottom: 20px;
-    animation: pulsar 1.5s infinite alternate;
-    text-shadow: 0 0 10px rgba(255, 204, 0, 0.8);
+.pack-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(231, 76, 60, 0.4);
 }
 
-/* Efeito de pulsação para o status do pack */
-@keyframes pulsar {
-    0% { opacity: 0.6; }
-    100% { opacity: 1; }
+.pack-button i {
+    transition: transform 0.3s ease;
 }
 
-/* Responsividade */
+.pack-button:hover i {
+    transform: translateX(3px);
+}
+
+.pack-footer {
+    text-align: center;
+    padding: 30px 20px;
+    margin-top: 50px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
 @media (max-width: 768px) {
+    .pack-header {
+        padding: 30px 20px;
+    }
+    
+    .pack-header h1 {
+        font-size: 2rem;
+    }
+    
     .packs-container {
-        flex-direction: column;
-        align-items: center;
+        grid-template-columns: 1fr;
+        max-width: 400px;
     }
-
-    .pack-row {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .pack-card {
-        width: 90%;
-    }
-
-    .animation-stage {
-        font-size: 28px;
-    }
-
-    #final-card {
-        width: 90%;
+    
+    .pack-image-container {
+        height: 120px;
     }
 }
