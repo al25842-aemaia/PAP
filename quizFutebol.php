@@ -50,10 +50,13 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz de Nacionalidades de Futebol</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/quizFutebol.css">
 </head>
 <body>
-<main class="quiz-content <?= $quizSubmitted ? 'quiz-submitted' : '' ?>">
+    <?php include 'menu.php'; ?>
+    
     <div class="quiz-app">
         <header class="quiz-header">
             <div class="logo">⚽</div>
@@ -86,7 +89,7 @@ $conn->close();
                 <button class="submit-btn">Verificar Respostas</button>
             </div>
 
-            <div id="result-container" class="result-container hidden">
+            <div class="result-container hidden">
                 <h3 class="result-title">Resultado Final</h3>
                 <p class="result-score">Você acertou <span id="score">0</span> de 8 perguntas</p>
                 <button class="restart-btn">
@@ -101,5 +104,6 @@ $conn->close();
     </div>
 
     <script src="js/quizFutebol.js"></script>
+    <?php include 'footer.php'; ?>
 </body>
 </html>

@@ -16,6 +16,8 @@ $imagens_packs = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escolha Seu Pack - Futebol 12</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/packs.css">
     <style>
         /* Efeito de hover premium para os cards */
@@ -44,6 +46,7 @@ $imagens_packs = [
     </style>
 </head>
 <body>
+    <?php include 'menu.php'; ?>
     <div class="pack-header">
         <div class="pack-header-content">
             <h1><span>ESCOLHA SEU PACK</span></h1>
@@ -87,5 +90,6 @@ $imagens_packs = [
             });
         });
     </script>
+    <?php include 'footer.php'; ?>
 </body>
 </html>
