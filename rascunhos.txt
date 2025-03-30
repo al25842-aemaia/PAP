@@ -26,3 +26,7 @@ include_once 'autenticacao.php';
         <?php } ?>
     </ul>
 </nav>
+grid: Debug: Verifique no console se os dados estão carregando
+    console.log('Jogadores:', window.jogadores);
+    console.log('Clubes:', window.clubes);
+    console.log('Nacionalidades:', window.nacionalidades);

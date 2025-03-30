@@ -152,7 +152,7 @@ $conn->close();
             <div class="modal-content">
                 <h3><i class="fas fa-trophy"></i> GANHASTE!</h3>
                 <p>Completaste o grid em <span id="final-time">00:00</span>!</p>
-                <button class="restart-btn" onclick="restartGame()">
+                <button class="restart-btn" id="restartBtn">
                     <i class="fas fa-redo"></i> RECOMEÇAR
                 </button>
             </div>
@@ -160,16 +160,10 @@ $conn->close();
     </main>
 
     <script>
-    // Garanta que os dados estão sendo passados corretamente
     window.jogadores = <?php echo json_encode($jogadores); ?>;
     window.clubes = <?php echo json_encode($clubes); ?>;
     window.nacionalidades = <?php echo json_encode($nacionalidades); ?>;
-    
-    // Debug: Verifique no console se os dados estão carregando
-    console.log('Jogadores:', window.jogadores);
-    console.log('Clubes:', window.clubes);
-    console.log('Nacionalidades:', window.nacionalidades);
-</script>
+    </script>
     
     <?php include 'footer.php'; ?>
     <script src="js/futbol11grid.js"></script>

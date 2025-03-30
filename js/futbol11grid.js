@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const timeEl = document.getElementById('time');
     const winModal = document.getElementById('win-modal');
     const finalTimeEl = document.getElementById('final-time');
+    const restartBtn = document.getElementById('restartBtn'); // Adicionei esta linha
     
     // Variáveis do jogo
     let correctCount = 0;
@@ -79,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
         timeEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
     
-    // Verificação do jogador (FUNÇÃO PRINCIPAL CORRIGIDA)
+    // Verificação do jogador
     function checkPlayer() {
         if (!gameActive) {
             debugLog('Jogo não está ativo');
@@ -127,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // PREENCHER CÉLULA (PARTE CRÍTICA)
+        // Preencher célula
         const cellContent = celula.querySelector('.cell-content');
         cellContent.innerHTML = `
             <img src="${jogadorEncontrado.imagem_jogador}" alt="${jogadorEncontrado.nome_jogador}" class="player-image">
@@ -191,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     }
     
-    // Event listeners (CORRIGIDO)
+    // Event listeners
     verifyBtn.addEventListener('click', function(e) {
         e.preventDefault();
         checkPlayer();
@@ -202,6 +203,12 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             checkPlayer();
         }
+    });
+
+    // Adicionei este event listener para o botão de recomeçar
+    restartBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        restartGame();
     });
     
     // Iniciar
