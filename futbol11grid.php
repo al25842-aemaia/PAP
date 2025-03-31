@@ -2,37 +2,71 @@
 <?php
 include 'db_connection.php';
 
-// Seleciona 3 clubes aleatórios
-$sql = "SELECT id_clube, nome_clube, imagem_clube FROM clube ORDER BY RAND() LIMIT 3";
+// Função para encontrar nacionalidades comuns a todos os clubes selecionados
+function encontrarNacionalidadesComuns($conn, $clubesIds) {
+    $clubesIdsStr = implode(',', $clubesIds);
+    
+    // Encontra nacionalidades que existem em TODOS os clubes selecionados
+    $sql = "SELECT n.id_nacionalidade, n.nacionalidade, n.imagem_nacionalidade
+            FROM nacionalidade n
+            WHERE NOT EXISTS (
+                SELECT c.id_clube 
+                FROM clube c 
+                WHERE c.id_clube IN ($clubesIdsStr)
+                AND NOT EXISTS (
+                    SELECT 1 
+                    FROM jogador j 
+                    WHERE j.id_clube = c.id_clube 
+                    AND j.id_nacionalidade = n.id_nacionalidade
+                )
+            )
+            ORDER BY RAND() LIMIT 3";
+    
+    $result = $conn->query($sql);
+    $nacionalidades = [];
+    while ($row = $result->fetch_assoc()) {
+        $nacionalidades[] = $row;
+    }
+    
+    return $nacionalidades;
+}
+
+// 1. Seleciona 3 clubes aleatórios que têm jogadores
+$sql = "SELECT c.id_clube, c.nome_clube, c.imagem_clube 
+        FROM clube c
+        WHERE EXISTS (SELECT 1 FROM jogador j WHERE j.id_clube = c.id_clube)
+        ORDER BY RAND() LIMIT 3";
 $result = $conn->query($sql);
 $clubes = [];
 while ($row = $result->fetch_assoc()) {
     $clubes[] = $row;
 }
 
-// Obtém os IDs dos clubes selecionados
+// 2. Encontra 3 nacionalidades que tenham jogadores em TODOS os 3 clubes selecionados
 $clubesIds = array_column($clubes, 'id_clube');
-$clubesIdsStr = implode(',', $clubesIds);
+$nacionalidades = encontrarNacionalidadesComuns($conn, $clubesIds);
 
-// Seleciona 3 nacionalidades que tenham jogadores nesses clubes
-$sql = "SELECT DISTINCT n.id_nacionalidade, n.nacionalidade, n.imagem_nacionalidade 
-        FROM jogador j
-        JOIN nacionalidade n ON j.id_nacionalidade = n.id_nacionalidade
-        WHERE j.id_clube IN ($clubesIdsStr)
-        GROUP BY n.id_nacionalidade
-        HAVING COUNT(DISTINCT j.id_clube) = 3
-        ORDER BY RAND() LIMIT 3";
-
-$result = $conn->query($sql);
-$nacionalidades = [];
-while ($row = $result->fetch_assoc()) {
-    $nacionalidades[] = $row;
+// Se não encontrou 3 nacionalidades, tenta novamente com outros clubes
+$tentativas = 0;
+while (count($nacionalidades) < 3 && $tentativas < 10) {
+    $result = $conn->query($sql);
+    $clubes = [];
+    while ($row = $result->fetch_assoc()) {
+        $clubes[] = $row;
+    }
+    $clubesIds = array_column($clubes, 'id_clube');
+    $nacionalidades = encontrarNacionalidadesComuns($conn, $clubesIds);
+    $tentativas++;
 }
 
-// Carrega todos os jogadores desses clubes e nacionalidades
-$sql = "SELECT j.id_jogador, j.nome_jogador, j.imagem_jogador, j.id_clube, j.id_nacionalidade 
+// 3. Carrega todos os jogadores para essas combinações
+$nacionalidadesIds = array_column($nacionalidades, 'id_nacionalidade');
+$nacionalidadesIdsStr = implode(',', $nacionalidadesIds);
+$clubesIdsStr = implode(',', $clubesIds);
+
+$sql = "SELECT j.id_jogador, j.nome_jogador, j.imagem_jogador, j.id_clube, j.id_nacionalidade
         FROM jogador j
-        WHERE j.id_clube IN ($clubesIdsStr)";
+        WHERE j.id_clube IN ($clubesIdsStr) AND j.id_nacionalidade IN ($nacionalidadesIdsStr)";
 $result = $conn->query($sql);
 $jogadores = [];
 while ($row = $result->fetch_assoc()) {
@@ -67,16 +101,16 @@ $conn->close();
         <div class="game-header">
             <div class="game-instructions">
                 <h2>COMO JOGAR</h2>
-                <p>Digite o nome de um jogador que atenda aos critérios do clube e nacionalidade selecionados</p>
+                <p>Digite o nome de um jogador que corresponda ao clube e nacionalidade</p>
             </div>
             <div class="game-stats">
                 <div class="stat-item">
                     <i class="fas fa-check-circle"></i>
-                    <span id="correct-count">0</span> Acertos
+                    <span id="correct-count">0</span>/9
                 </div>
                 <div class="stat-item">
                     <i class="fas fa-clock"></i>
-                    <span id="time">01:30</span>
+                    <span id="time">05:00</span>
                 </div>
             </div>
         </div>
@@ -107,28 +141,28 @@ $conn->close();
 
         <div class="game-controls">
             <div class="input-container">
-                <input type="text" id="playerInput" placeholder="Digite o nome do jogador...">
-                <button class="verify-btn" onclick="checkPlayer()">
+                <input type="text" id="playerInput" placeholder="Digite o nome do jogador..." autocomplete="off">
+                <button class="verify-btn" id="verifyBtn">
                     <i class="fas fa-check"></i> VERIFICAR
+                </button>
+            </div>
+        </div>
+
+        <div class="game-modal" id="win-modal">
+            <div class="modal-content">
+                <h3><i class="fas fa-trophy"></i> GANHASTE!</h3>
+                <p>Completaste o grid em <span id="final-time">00:00</span>!</p>
+                <button class="restart-btn" id="restartBtn">
+                    <i class="fas fa-redo"></i> RECOMEÇAR
                 </button>
             </div>
         </div>
     </main>
 
-    <div class="game-footer">
-        <div class="about-section">
-            <h3><i class="fas fa-futbol"></i> FUTEBOL12</h3>
-            <p>O melhor portal sobre futebol que existe. Notícias atualizadas ao minuto, análises detalhadas e estatísticas completas.</p>
-        </div>
-        <div class="contact-section">
-            <h4><i class="fas fa-envelope"></i> CONTATO</h4>
-            <p><i class="fas fa-at"></i> at2582@semala.com</p>
-            <p><i class="fas fa-at"></i> at25842@semala.com</p>
-        </div>
-    </div>
-
     <script>
-        let jogadores = <?php echo json_encode($jogadores); ?>;
+    window.jogadores = <?php echo json_encode($jogadores); ?>;
+    window.clubes = <?php echo json_encode($clubes); ?>;
+    window.nacionalidades = <?php echo json_encode($nacionalidades); ?>;
     </script>
     
     <?php include 'footer.php'; ?>
