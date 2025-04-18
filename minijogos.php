@@ -81,6 +81,20 @@
                     </button>
                 </div>
             </div>
+            <!-- Minijogo 5 -->
+            <div class="game-card" onclick="navigateTo('sm.php')">
+                <div class="game-image">
+                    <img src="imagens/SOCCER MANAGER.jpg" alt="Quiz de Futebol">
+                    <div class="game-overlay"></div>
+                </div>
+                <div class="game-info">
+                    <h3>SOCCER MANAGER</h3>
+                    <p>Teste seu conhecimento sobre futebol</p>
+                    <button class="play-button">
+                        <i class="fas fa-play"></i> JOGAR
+                    </button>
+                </div>
+            </div>
         </div>
     </main>
 
