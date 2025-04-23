@@ -1,0 +1,708 @@
+/* Reset e estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    color: #212529;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+/* Cabeçalho */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #1a73e8;
+    color: white;
+}
+
+.club-info h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.club-info p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.financial-info p {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.reset-button button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.reset-button button:hover {
+    background-color: #c82333;
+}
+
+/* Navegação */
+nav ul {
+    display: flex;
+    list-style: none;
+    background-color: #f1f8fe;
+    border-bottom: 1px solid #dee2e6;
+}
+
+nav ul li {
+    margin-right: 1px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #495057;
+    padding: 15px 20px;
+    display: block;
+    font-weight: 500;
+    transition: all 0.3s;
+    border-bottom: 3px solid transparent;
+}
+
+nav ul li a:hover {
+    background-color: #e3f2fd;
+    color: #1a73e8;
+}
+
+nav ul li a.active {
+    background-color: #e3f2fd;
+    color: #1a73e8;
+    border-bottom: 3px solid #1a73e8;
+}
+
+/* Seções de conteúdo */
+.content-section {
+    padding: 25px;
+    display: none;
+}
+
+.content-section.active {
+    display: block;
+}
+
+.content-section h2 {
+    color: #1a73e8;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #dee2e6;
+    font-weight: 600;
+}
+
+/* Início de carreira */
+.career-start {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.career-start h1 {
+    font-size: 2.2rem;
+    color: #1a73e8;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.error-message ul {
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+.career-start select {
+    padding: 12px 20px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    min-width: 300px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    transition: border-color 0.3s;
+}
+
+.career-start select:focus {
+    outline: none;
+    border-color: #1a73e8;
+    box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+}
+
+.career-start button {
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+    font-weight: 500;
+}
+
+.career-start button:hover {
+    background-color: #1557b0;
+    transform: translateY(-2px);
+}
+
+/* Tabela de classificação */
+.league-table {
+    margin-bottom: 30px;
+    overflow-x: auto;
+}
+
+.league-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.league-table th {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-weight: 600;
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.league-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.league-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.league-table .highlight {
+    background-color: #e3f2fd;
+    font-weight: 500;
+}
+
+/* Jogos e resultados */
+.fixtures, .results {
+    margin-bottom: 30px;
+}
+
+.fixture, .result {
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    background-color: #f8f9fa;
+    border-left: 3px solid #1a73e8;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fixture p, .result p {
+    font-weight: 500;
+}
+
+/* Botão avançar semana */
+.advance-form {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.advance-form button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+    font-weight: 500;
+}
+
+.advance-form button:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+/* Plantel */
+.squad-tabs {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.squad-tabs .tab-button {
+    padding: 12px 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    color: #495057;
+    transition: all 0.3s;
+    border-bottom: 3px solid transparent;
+    margin-right: 5px;
+}
+
+.squad-tabs .tab-button:hover {
+    color: #1a73e8;
+    border-bottom-color: #bbdefb;
+}
+
+.squad-tabs .tab-button.active {
+    color: #1a73e8;
+    border-bottom-color: #1a73e8;
+    font-weight: 600;
+}
+
+.squad-content {
+    display: none;
+}
+
+.squad-content.active {
+    display: block;
+}
+
+.player-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 15px;
+}
+
+.player-card {
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 8px;
+    border-left: 3px solid #1a73e8;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.player-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.player-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border: 2px solid #e9ecef;
+}
+
+.player-info {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.player-number {
+    font-weight: bold;
+    color: #1a73e8;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+.player-name {
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+
+.player-position {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.player-rating {
+    font-weight: bold;
+    color: #28a745;
+    font-size: 0.9rem;
+}
+
+.player-value {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+.player-age {
+    color: #6c757d;
+    font-size: 0.8rem;
+    margin-top: 3px;
+}
+
+.player-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.player-actions button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+    font-weight: 500;
+}
+
+.player-actions button:first-child {
+    background-color: #e3f2fd;
+    color: #1a73e8;
+}
+
+.player-actions button:first-child:hover {
+    background-color: #bbdefb;
+}
+
+.player-actions button:last-child {
+    background-color: #f8d7da;
+    color: #dc3545;
+}
+
+.player-actions button:last-child:hover {
+    background-color: #f5c6cb;
+}
+
+/* Instalações */
+.facilities-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.facility {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    border-left: 3px solid #1a73e8;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.facility h3 {
+    margin-bottom: 10px;
+    color: #1a73e8;
+    font-weight: 600;
+}
+
+.facility p {
+    margin-bottom: 15px;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.facility button {
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.facility button:hover {
+    background-color: #1557b0;
+}
+
+.facility button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+.max-level {
+    color: #28a745;
+    font-weight: bold;
+    padding: 8px 0;
+    font-size: 0.9rem;
+}
+
+/* Mercado */
+.transfer-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+}
+
+.transfer-player {
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    border-left: 3px solid #1a73e8;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.transfer-player .player-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border: 2px solid #e9ecef;
+}
+
+.transfer-player .player-info {
+    margin-bottom: 15px;
+}
+
+.transfer-player .player-name {
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+
+.transfer-player .player-club {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.transfer-player .player-position {
+    display: inline-block;
+    background-color: #e3f2fd;
+    color: #1a73e8;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.transfer-player .player-age {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.transfer-player .player-rating {
+    font-weight: bold;
+    color: #28a745;
+    margin-bottom: 5px;
+}
+
+.transfer-player .player-value {
+    color: #1a73e8;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.transfer-player .player-salary {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.transfer-player button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    font-weight: 500;
+    margin-top: auto;
+}
+
+.transfer-player button:hover {
+    background-color: #218838;
+}
+
+.transfer-player button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+/* Academia */
+.youth-players {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 15px;
+}
+
+.youth-player {
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    border-left: 3px solid #ffc107;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.youth-player .player-info {
+    margin-bottom: 15px;
+}
+
+.youth-player .player-name {
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+
+.youth-player .player-age {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.youth-player .player-position {
+    display: inline-block;
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.youth-player .player-rating {
+    font-weight: bold;
+    color: #28a745;
+    margin-bottom: 10px;
+}
+
+.youth-player .player-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    font-size: 0.8rem;
+}
+
+.youth-player .player-stats span {
+    color: #6c757d;
+}
+
+.youth-player button {
+    background-color: #ffc107;
+    color: #212529;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    font-weight: 500;
+    margin-top: auto;
+}
+
+.youth-player button:hover {
+    background-color: #e0a800;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .financial-info {
+        margin-top: 0;
+    }
+    
+    nav ul {
+        flex-direction: column;
+    }
+    
+    nav ul li {
+        margin-right: 0;
+        margin-bottom: 1px;
+    }
+    
+    nav ul li a {
+        border-radius: 0;
+        border-bottom: none;
+        border-left: 3px solid transparent;
+    }
+    
+    nav ul li a:hover {
+        border-left-color: #1a73e8;
+    }
+    
+    nav ul li a.active {
+        border-left: 3px solid #1a73e8;
+        border-bottom: none;
+    }
+    
+    .player-list, .transfer-list, .youth-players {
+        grid-template-columns: 1fr;
+    }
+    
+    .squad-tabs {
+        flex-direction: column;
+    }
+    
+    .squad-tabs .tab-button {
+        width: 100%;
+        text-align: left;
+        border-bottom: none;
+        border-left: 3px solid transparent;
+    }
+    
+    .squad-tabs .tab-button.active {
+        border-left: 3px solid #1a73e8;
+        border-bottom: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .content-section {
+        padding: 15px;
+    }
+    
+    .player-actions {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .player-actions button {
+        flex: 1;
+        min-width: 120px;
+    }
+    
+    .facilities-list {
+        grid-template-columns: 1fr;
+    }
+}
